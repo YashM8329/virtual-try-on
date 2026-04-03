@@ -13,6 +13,7 @@ import urllib.request
 SAM_CHECKPOINT = "weights/sam_vit_h_4b8939.pth"
 POSE_LANDMARKER_MODEL = "weights/pose_landmarker_heavy.task"
 MP_MODEL_PATH = "weights/selfie_multiclass_256x256.tflite"
+GFPGAN_MODEL_PATH = "weights/GFPGANv1.4.pth"
 
 
 def download_weights():
@@ -50,6 +51,17 @@ def download_weights():
         print("MediaPipe model downloaded.")
     else:
         print("✅ MediaPipe Selfie Multiclass model already present.")
+
+    # GFPGAN v1.4 weights
+    if not os.path.exists(GFPGAN_MODEL_PATH):
+        print("Downloading GFPGAN v1.4 weights...")
+        urllib.request.urlretrieve(
+            "https://github.com/TencentARC/GFPGAN/releases/download/v1.3.0/GFPGANv1.4.pth",
+            GFPGAN_MODEL_PATH,
+        )
+        print("GFPGAN weights downloaded.")
+    else:
+        print("✅ GFPGAN weights already present.")
 
     print("\n✅ All weights ready.")
 

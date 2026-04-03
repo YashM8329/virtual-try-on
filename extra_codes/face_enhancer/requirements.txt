@@ -1,0 +1,9 @@
+# Python 3.8+ recommended
+numpy
+opencv-python
+Pillow
+facenet-pytorch
+rembg
+gfpgan
+scikit-image
+tqdm

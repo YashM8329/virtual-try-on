@@ -43,6 +43,16 @@ os.makedirs(SCORECARD_DIR, exist_ok=True)
 from weight_downloader import download_weights
 download_weights()
 
+# ── Import pipeline helpers ────────────────────────────────────────────────────
+from face_enhancer import FaceEnhancer
+from image_utils import preprocess_image, save_images
+from pose_extraction import extract_pose_landmarks, get_torso_bbox
+from skin_segmentation import get_skin_mask
+from clothing_mask import get_clothing_mask
+from inpainting import run_inpainting
+from neck_blend import apply_neck_blend
+from autocrop import crop_to_hands
+
 # ── Step 1: Load all models ────────────────────────────────────────────────────
 from model_loader import load_sam, load_pose_landmarker, load_skin_segmenter, load_diffusion_pipeline
 
@@ -51,14 +61,8 @@ sam_predictor = load_sam()
 pose_detector = load_pose_landmarker()
 skin_segmenter = load_skin_segmenter()
 pipe = load_diffusion_pipeline()
+face_enhancer = FaceEnhancer()
 print("[Model Loading] All models loaded.\n")
-
-# ── Import pipeline helpers ────────────────────────────────────────────────────
-from image_utils import preprocess_image, save_images
-from pose_extraction import extract_pose_landmarks, get_torso_bbox
-from skin_segmentation import get_skin_mask
-from clothing_mask import get_clothing_mask
-from inpainting import run_inpainting
 
 # [NEW] Scorecard & BG removal logic
 from scorecard_processor import ScorecardProcessor
@@ -90,13 +94,25 @@ def virtual_tryon_single(image_path: str) -> Image.Image:
     torso_bbox = get_torso_bbox(lm_px, h, w, pad_v=0.08, pad_h=0.18)
     print(f"[2/5] Pose extracted. Torso bbox: {torso_bbox}")
 
+    # ── Auto-crop to hands (vertical crop head → lowest hand) ─────────────────
+    img_pil, img_bgr, (h, w) = crop_to_hands(img_pil, img_bgr, lm_px, fname=fname)
+    img_rgb = np.array(img_pil)
+    print(f"      Auto-cropped → {w}x{h}")
+
+    # ── [NEW] Face Enhancement ───────────────────────────────────────────────
+    print(f"      Enhancing face (studio look)...")
+    img_pil = face_enhancer.enhance_full(img_pil, bokeh_strength=15.0, save_name=fname)
+    img_rgb = np.array(img_pil)
+    print(f"      Enhanced image ready.")
+
     # ── Step 3: Skin segmentation ──────────────────────────────────────────────
     skin_mask = get_skin_mask(img_rgb, skin_segmenter)
     print("[3/5] Skin mask computed.")
 
     # ── Step 4: Clothing mask ──────────────────────────────────────────────────
     refined_mask, soft_mask = get_clothing_mask(img_rgb, lm_px, skin_mask, torso_bbox)
-    print("[4/5] Clothing mask refined.")
+    soft_mask = apply_neck_blend(soft_mask, skin_mask)   # neck blending fix
+    print("[4/5] Clothing mask refined + neck blend applied.")
 
     # Save mask debug composite to masks/
     import cv2
