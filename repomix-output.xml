@@ -1,0 +1,1946 @@
+This file is a merged representation of a subset of the codebase, containing files not matching ignore patterns, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of a subset of the repository's contents that is considered the most important context.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching these patterns are excluded: extra_codes/**
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+.gitignore
+autocrop.py
+clothing_mask.py
+cropped/image_1_cropped.png
+cropped/image_10_cropped.png
+cropped/image_11_cropped.png
+cropped/image_12_cropped.png
+cropped/image_13_cropped.png
+cropped/image_14_cropped.png
+cropped/image_15_cropped.png
+cropped/image_16_cropped.png
+cropped/image_17_cropped.png
+cropped/image_18_cropped.png
+cropped/image_19_cropped.png
+cropped/image_2_cropped.png
+cropped/image_20_cropped.png
+cropped/image_21_cropped.png
+cropped/image_22_cropped.png
+cropped/image_23_cropped.png
+cropped/image_24_cropped.png
+cropped/image_25_cropped.png
+cropped/image_26_cropped.png
+cropped/image_27_cropped.png
+cropped/image_28_cropped.png
+cropped/image_29_cropped.png
+cropped/image_3_cropped.png
+cropped/image_30_cropped.png
+cropped/image_31_cropped.png
+cropped/image_32_cropped.png
+cropped/image_33_cropped.png
+cropped/image_34_cropped.png
+cropped/image_35_cropped.png
+cropped/image_36_cropped.png
+cropped/image_37_cropped.png
+cropped/image_38_cropped.png
+cropped/image_39_cropped.png
+cropped/image_4_cropped.png
+cropped/image_40_cropped.png
+cropped/image_41_cropped.png
+cropped/image_5_cropped.png
+cropped/image_6_cropped.png
+cropped/image_7_cropped.png
+cropped/image_8_cropped.png
+cropped/image_9_cropped.png
+enhanced/image_1_enhanced.png
+enhanced/image_10_enhanced.png
+enhanced/image_11_enhanced.png
+enhanced/image_12_enhanced.png
+enhanced/image_13_enhanced.png
+enhanced/image_14_enhanced.png
+enhanced/image_15_enhanced.png
+enhanced/image_16_enhanced.png
+enhanced/image_17_enhanced.png
+enhanced/image_18_enhanced.png
+enhanced/image_19_enhanced.png
+enhanced/image_2_enhanced.png
+enhanced/image_20_enhanced.png
+enhanced/image_21_enhanced.png
+enhanced/image_22_enhanced.png
+enhanced/image_23_enhanced.png
+enhanced/image_24_enhanced.png
+enhanced/image_25_enhanced.png
+enhanced/image_26_enhanced.png
+enhanced/image_27_enhanced.png
+enhanced/image_28_enhanced.png
+enhanced/image_29_enhanced.png
+enhanced/image_3_enhanced.png
+enhanced/image_30_enhanced.png
+enhanced/image_31_enhanced.png
+enhanced/image_32_enhanced.png
+enhanced/image_33_enhanced.png
+enhanced/image_34_enhanced.png
+enhanced/image_35_enhanced.png
+enhanced/image_36_enhanced.png
+enhanced/image_37_enhanced.png
+enhanced/image_38_enhanced.png
+enhanced/image_39_enhanced.png
+enhanced/image_4_enhanced.png
+enhanced/image_40_enhanced.png
+enhanced/image_41_enhanced.png
+enhanced/image_5_enhanced.png
+enhanced/image_6_enhanced.png
+enhanced/image_7_enhanced.png
+enhanced/image_8_enhanced.png
+enhanced/image_9_enhanced.png
+face_enhancer.py
+GEMINI.md
+image_utils.py
+inpainting.py
+input/image_23.jpg
+input/image_24.jpg
+input/image_25.jpg
+input/image_26.jpg
+input/image_27.jpg
+input/image_28.jpg
+input/image_29.jpg
+input/image_30.jpg
+input/image_31.jpg
+input/image_32.jpg
+input/image_33.jpg
+input/image_34.jpg
+input/image_35.jpg
+input/image_36.jpg
+input/image_37.jpg
+input/image_38.jpg
+input/image_39.jpg
+input/image_40.jpg
+input/image_41.jpg
+INSTALL.md
+main.py
+masks/image_1_copy_mask_debug.png
+masks/image_1_mask_debug.png
+masks/image_10_copy_mask_debug.png
+masks/image_10_mask_debug.png
+masks/image_11_copy_mask_debug.png
+masks/image_11_mask_debug.png
+masks/image_12_copy_mask_debug.png
+masks/image_12_mask_debug.png
+masks/image_13_copy_mask_debug.png
+masks/image_13_mask_debug.png
+masks/image_14_copy_mask_debug.png
+masks/image_14_mask_debug.png
+masks/image_15_copy_mask_debug.png
+masks/image_15_mask_debug.png
+masks/image_16_copy_mask_debug.png
+masks/image_16_mask_debug.png
+masks/image_17_copy_mask_debug.png
+masks/image_17_mask_debug.png
+masks/image_18_copy_mask_debug.png
+masks/image_18_mask_debug.png
+masks/image_19_copy_mask_debug.png
+masks/image_19_mask_debug.png
+masks/image_2_copy_mask_debug.png
+masks/image_2_mask_debug.png
+masks/image_20_mask_debug.png
+masks/image_21_mask_debug.png
+masks/image_22_mask_debug.png
+masks/image_23_mask_debug.png
+masks/image_24_mask_debug.png
+masks/image_25_mask_debug.png
+masks/image_26_mask_debug.png
+masks/image_27_mask_debug.png
+masks/image_28_mask_debug.png
+masks/image_29_mask_debug.png
+masks/image_3_copy_mask_debug.png
+masks/image_3_mask_debug.png
+masks/image_30_mask_debug.png
+masks/image_31_mask_debug.png
+masks/image_32_mask_debug.png
+masks/image_33_mask_debug.png
+masks/image_34_mask_debug.png
+masks/image_35_mask_debug.png
+masks/image_36_mask_debug.png
+masks/image_37_mask_debug.png
+masks/image_38_mask_debug.png
+masks/image_39_mask_debug.png
+masks/image_4_copy_mask_debug.png
+masks/image_4_mask_debug.png
+masks/image_40_mask_debug.png
+masks/image_41_mask_debug.png
+masks/image_5_copy_mask_debug.png
+masks/image_5_mask_debug.png
+masks/image_6_copy_mask_debug.png
+masks/image_6_mask_debug.png
+masks/image_7_copy_mask_debug.png
+masks/image_7_mask_debug.png
+masks/image_8_copy_mask_debug.png
+masks/image_8_mask_debug.png
+masks/image_9_copy_mask_debug.png
+masks/image_9_mask_debug.png
+model_loader.py
+neck_blend.py
+output/image_1_green_hoodie.png
+output/image_10_green_hoodie.png
+output/image_11_green_hoodie.png
+output/image_12_green_hoodie.png
+output/image_13_green_hoodie.png
+output/image_14_green_hoodie.png
+output/image_15_green_hoodie.png
+output/image_16_green_hoodie.png
+output/image_17_green_hoodie.png
+output/image_18_green_hoodie.png
+output/image_19_green_hoodie.png
+output/image_2_green_hoodie.png
+output/image_20_green_hoodie.png
+output/image_21_green_hoodie.png
+output/image_22_green_hoodie.png
+output/image_23_green_hoodie.png
+output/image_24_green_hoodie.png
+output/image_25_green_hoodie.png
+output/image_26_green_hoodie.png
+output/image_27_green_hoodie.png
+output/image_28_green_hoodie.png
+output/image_29_green_hoodie.png
+output/image_3_green_hoodie.png
+output/image_30_green_hoodie.png
+output/image_31_green_hoodie.png
+output/image_32_green_hoodie.png
+output/image_33_green_hoodie.png
+output/image_34_green_hoodie.png
+output/image_35_green_hoodie.png
+output/image_36_green_hoodie.png
+output/image_37_green_hoodie.png
+output/image_38_green_hoodie.png
+output/image_39_green_hoodie.png
+output/image_4_green_hoodie.png
+output/image_40_green_hoodie.png
+output/image_41_green_hoodie.png
+output/image_5_green_hoodie.png
+output/image_6_green_hoodie.png
+output/image_7_green_hoodie.png
+output/image_8_green_hoodie.png
+output/image_9_green_hoodie.png
+pose_extraction.py
+README.md
+requirements.txt
+scorecard_processor.py
+scorecard/image_1_scorecard.png
+scorecard/image_10_scorecard.png
+scorecard/image_11_scorecard.png
+scorecard/image_12_scorecard.png
+scorecard/image_13_scorecard.png
+scorecard/image_14_scorecard.png
+scorecard/image_15_scorecard.png
+scorecard/image_16_scorecard.png
+scorecard/image_2_scorecard.png
+scorecard/image_23_scorecard.png
+scorecard/image_24_scorecard.png
+scorecard/image_25_scorecard.png
+scorecard/image_26_scorecard.png
+scorecard/image_27_scorecard.png
+scorecard/image_28_scorecard.png
+scorecard/image_29_scorecard.png
+scorecard/image_3_scorecard.png
+scorecard/image_30_scorecard.png
+scorecard/image_31_scorecard.png
+scorecard/image_32_scorecard.png
+scorecard/image_33_scorecard.png
+scorecard/image_34_scorecard.png
+scorecard/image_35_scorecard.png
+scorecard/image_36_scorecard.png
+scorecard/image_37_scorecard.png
+scorecard/image_38_scorecard.png
+scorecard/image_39_scorecard.png
+scorecard/image_4_scorecard.png
+scorecard/image_40_scorecard.png
+scorecard/image_41_scorecard.png
+scorecard/image_5_scorecard.png
+scorecard/image_6_scorecard.png
+scorecard/image_7_scorecard.png
+scorecard/image_8_scorecard.png
+scorecard/image_9_scorecard.png
+scorecard/Photos/image_1_copy.png
+scorecard/Photos/image_10_copy.png
+scorecard/Photos/image_11_copy.png
+scorecard/Photos/image_12_copy.png
+scorecard/Photos/image_13_copy.png
+scorecard/Photos/image_14_copy.png
+scorecard/Photos/image_15_copy.png
+scorecard/Photos/image_16_copy.png
+scorecard/Photos/image_17_copy.png
+scorecard/Photos/image_18_copy.png
+scorecard/Photos/image_19_copy.png
+scorecard/Photos/image_2_copy.png
+scorecard/Photos/image_3_copy.png
+scorecard/Photos/image_4_copy.png
+scorecard/Photos/image_5_copy.png
+scorecard/Photos/image_6_copy.png
+scorecard/Photos/image_7_copy.png
+scorecard/Photos/image_8_copy.png
+scorecard/Photos/image_9_copy.png
+skin_segmentation.py
+template/ScoreBoard Sample_2.jpg
+template/ScoreBoard Sample_3.jpg
+template/ScoreBoard Sample_4.jpg
+template/template_1/ScoreBoard Output_1.png
+template/template_1/ScoreBoard Sample_1.jpeg
+template/template_1/template_0_1696_2528.png
+template/template_1/template_1696_2528.png
+template/template_1/template_512_768.png
+template/template_1/template_not_human_1696_2528.png
+template/template_1/template_not_human_scoreboard_1696_2528.png
+weight_downloader.py
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path=".gitignore">
+.venv/
+weights/
+</file>
+
+<file path="autocrop.py">
+"""
+autocrop.py
+Pose-Aware Auto-Crop — Crops the input image HORIZONTALLY ONLY,
+trimming the width so the frame spans from the leftmost to the
+rightmost hand/wrist landmark. Full image height is preserved.
+
+Width is snapped to the nearest lower multiple of 8 (SD requirement).
+No margin is added — the crop is tight to the outermost hand x-coords.
+
+Usage (drop-in, no core logic change):
+    from autocrop import crop_to_hands
+    img_pil, img_bgr, (h, w) = preprocess_image(image_path)
+    img_pil, img_bgr, (h, w) = crop_to_hands(img_pil, img_bgr, lm_px)
+"""
+
+import os
+import cv2
+import numpy as np
+from PIL import Image
+
+CROP_DIR = "cropped"
+os.makedirs(CROP_DIR, exist_ok=True)
+
+
+# MediaPipe landmark indices used for horizontal boundary
+_WRIST_IDXS = [15, 16]               # Left + right wrists
+_HAND_IDXS  = [17, 18, 19, 20, 21, 22]  # Pinky/index/thumb tips
+
+
+def crop_to_hands(
+    img_pil: Image.Image,
+    img_bgr: np.ndarray,
+    lm_px: dict,
+    fname: str = None,
+):
+    """
+    Crop the image horizontally so the frame spans tightly from the
+    leftmost to the rightmost hand/wrist landmark. Height unchanged.
+
+    Args:
+        img_pil  : PIL Image (RGB) — must match img_bgr spatially
+        img_bgr  : np.ndarray (H, W, 3) BGR
+        lm_px    : dict {idx: (x_px, y_px)} from extract_pose_landmarks()
+
+    Returns:
+        (cropped_pil, cropped_bgr, (new_h, new_w))
+        — same tuple shape as preprocess_image(), slots in directly.
+    """
+    h, w = img_bgr.shape[:2]
+
+    # ── Collect all hand/wrist x-coordinates ───────────────────────────────
+    x_candidates = []
+    for idx in _WRIST_IDXS + _HAND_IDXS:
+        if idx in lm_px:
+            x_candidates.append(lm_px[idx][0])
+
+    if x_candidates:
+        margin_px = int(w * 0.10)                        # 10% of original width
+        left_x  = max(0, min(x_candidates) - margin_px)
+        right_x = min(w, max(x_candidates) + margin_px)
+    else:
+        # Fallback: keep full width
+        left_x, right_x = 0, w
+
+    # ── Snap right boundary down to multiple of 8 (SD requirement) ─────────
+    crop_w  = right_x - left_x
+    snap_w  = (crop_w // 8) * 8        # floor: at most 7 px trimmed from right
+    right_x = left_x + snap_w          # recalculate the right edge
+
+    # ── Horizontal-only crop; full height kept ──────────────────────────────
+    cropped_bgr = img_bgr[:, left_x:right_x, :]
+    cropped_rgb = cv2.cvtColor(cropped_bgr, cv2.COLOR_BGR2RGB)
+    cropped_pil = Image.fromarray(cropped_rgb)
+
+    # ── Save to cropped/ folder if filename provided ──────────────────────────
+    if fname:
+        save_path = os.path.join(CROP_DIR, f"{fname}_cropped.png")
+        cropped_pil.save(save_path)
+
+    new_h, new_w = cropped_bgr.shape[:2]
+    return cropped_pil, cropped_bgr, (new_h, new_w)
+</file>
+
+<file path="clothing_mask.py">
+"""
+clothing_mask.py
+Phase 1c — Clothing Mask Generation + Mask Refinement.
+
+IDM-VTON style mask: a wide rectangle covering the torso area.
+- Top  : just below chin (derived from nose + shoulder landmarks)
+- Bottom: below hips with padding
+- Left/Right: nearly full image width
+- Rounded top corners (cosmetic, matches IDM-VTON shape)
+- Gaussian soft-edge blur for smooth boundary blending
+"""
+
+import cv2
+import numpy as np
+
+
+def get_clothing_mask(
+    img_rgb: np.ndarray,
+    lm_px: dict,
+    skin_mask: np.ndarray,
+    torso_bbox: tuple,
+    blur_radius: int = 31,
+):
+    """
+    Generate an IDM-VTON style clothing mask.
+
+    Args:
+        img_rgb    : np.ndarray (H, W, 3) RGB
+        lm_px      : landmark pixel dict from pose extraction
+        skin_mask  : protection mask (H, W) uint8 from skin segmentation
+        torso_bbox : (x1, y1, x2, y2) torso bounding box (unused directly,
+                     kept for API parity with notebook)
+        blur_radius: Gaussian blur kernel size for soft edge
+
+    Returns:
+        refined_mask : np.ndarray (H, W) uint8 — hard binary mask
+        soft_mask    : np.ndarray (H, W) uint8 — Gaussian-blurred soft mask
+    """
+    h, w = img_rgb.shape[:2]
+
+    # ── Top of mask: chin position ────────────────────────────────────────────
+    nose_y = lm_px.get(0, (w // 2, int(h * 0.15)))[1]
+    l_shoulder_y = lm_px.get(11, (w // 3, int(h * 0.40)))[1]
+    r_shoulder_y = lm_px.get(12, (2 * w // 3, int(h * 0.40)))[1]
+    shoulder_y = min(l_shoulder_y, r_shoulder_y)
+
+    # Chin = 60% of the way from nose down to shoulders
+    chin_y = int(nose_y + (shoulder_y - nose_y) * 0.60)
+    top_y = max(int(h * 0.15), chin_y)
+
+    # ── Bottom of mask: below hips ────────────────────────────────────────────
+    l_hip_y = lm_px.get(23, (w // 3, int(h * 0.75)))[1]
+    r_hip_y = lm_px.get(24, (2 * w // 3, int(h * 0.75)))[1]
+    hip_y = max(l_hip_y, r_hip_y)
+    bottom_y = min(h, int(hip_y + h * 0.12))
+
+    # ── Left/Right: full image width with tiny margin ──────────────────────────
+    left_x = int(w * 0.01)
+    right_x = int(w * 0.99)
+
+    # ── Build solid rectangle mask ─────────────────────────────────────────────
+    refined_mask = np.zeros((h, w), dtype=np.uint8)
+    refined_mask[top_y:bottom_y, left_x:right_x] = 255
+
+    # ── Rounded top-left corner ────────────────────────────────────────────────
+    corner_radius = int(w * 0.08)
+
+    corner_mask = np.zeros((h, w), dtype=np.uint8)
+    cv2.rectangle(
+        corner_mask,
+        (left_x, top_y),
+        (left_x + corner_radius, top_y + corner_radius),
+        255,
+        -1,
+    )
+    cv2.circle(
+        corner_mask,
+        (left_x + corner_radius, top_y + corner_radius),
+        corner_radius,
+        0,
+        -1,
+    )
+    refined_mask = cv2.subtract(refined_mask, corner_mask)
+
+    # ── Rounded top-right corner ───────────────────────────────────────────────
+    corner_mask2 = np.zeros((h, w), dtype=np.uint8)
+    cv2.rectangle(
+        corner_mask2,
+        (right_x - corner_radius, top_y),
+        (right_x, top_y + corner_radius),
+        255,
+        -1,
+    )
+    cv2.circle(
+        corner_mask2,
+        (right_x - corner_radius, top_y + corner_radius),
+        corner_radius,
+        0,
+        -1,
+    )
+    refined_mask = cv2.subtract(refined_mask, corner_mask2)
+
+    # ── Gaussian soft edge ─────────────────────────────────────────────────────
+    br = blur_radius if blur_radius % 2 == 1 else blur_radius + 1
+    soft_mask = cv2.GaussianBlur(refined_mask, (br, br), sigmaX=11)
+
+    return refined_mask, soft_mask
+</file>
+
+<file path="face_enhancer.py">
+"""
+face_enhancer.py
+
+Key changes vs previous version
+────────────────────────────────
+1. bokeh_strength defaults to 0 in enhance_full.
+   rembg (U2Net) background removal was running a full neural net
+   per image only to produce a subtle depth-of-field blur that is
+   invisible after the hoodie overlay.  Setting bokeh_strength=0
+   skips get_foreground_mask() entirely — saving ~3-5 s/image.
+
+2. GFPGAN is loaded lazily on first call (_get_gfpgan uses cached
+   instance).  No change in behaviour, but makes the import faster
+   when GFPGAN weights are missing.
+
+3. denoise h-parameter lowered: 5 → 3.
+   Slightly less aggressive, imperceptibly different output, a few
+   ms faster on large images.
+"""
+
+import os
+import cv2
+import numpy as np
+from PIL import Image
+from io import BytesIO
+
+try:
+    from facenet_pytorch import MTCNN
+except ImportError:
+    print("[FaceEnhancer] Warning: facenet-pytorch not found. Face restoration will be skipped.")
+    MTCNN = None
+
+try:
+    from gfpgan import GFPGANer
+except ImportError:
+    print("[FaceEnhancer] Warning: gfpgan not found. Face restoration will be skipped.")
+    GFPGANer = None
+
+try:
+    from rembg import remove
+except ImportError:
+    print("[FaceEnhancer] Warning: rembg not found. Bokeh effect will be skipped.")
+    remove = None
+
+
+class FaceEnhancer:
+    def __init__(self, device="cpu", model_path="weights/GFPGANv1.4.pth"):
+        self.device = device
+        self.model_path = model_path
+        self._mtcnn  = None
+        self._gfpgan = None
+
+    # ── Lazy model accessors ───────────────────────────────────────────────────
+
+    def _get_mtcnn(self):
+        if self._mtcnn is None and MTCNN is not None:
+            self._mtcnn = MTCNN(keep_all=True, device=self.device)
+        return self._mtcnn
+
+    def _get_gfpgan(self):
+        if self._gfpgan is None and GFPGANer is not None:
+            if not os.path.exists(self.model_path):
+                print(f"[FaceEnhancer] GFPGAN weights not found at {self.model_path}")
+                return None
+            self._gfpgan = GFPGANer(
+                model_path=self.model_path,
+                upscale=1,
+                arch="clean",
+                channel_multiplier=2,
+                bg_upsampler=None,
+                device=self.device,
+            )
+        return self._gfpgan
+
+    # ── Image processing helpers ───────────────────────────────────────────────
+
+    def apply_clahe(self, img_cv2, clip=1.1):
+        lab = cv2.cvtColor(img_cv2, cv2.COLOR_BGR2LAB)
+        l, a, b = cv2.split(lab)
+        clahe = cv2.createCLAHE(clipLimit=clip, tileGridSize=(8, 8))
+        cl = clahe.apply(l)
+        return cv2.cvtColor(cv2.merge((cl, a, b)), cv2.COLOR_LAB2BGR)
+
+    def unsharp_mask(self, img_cv2, amount=0.5, radius=1):
+        blurred = cv2.GaussianBlur(img_cv2, (0, 0), sigmaX=radius)
+        return cv2.addWeighted(img_cv2, 1 + amount, blurred, -amount, 0)
+
+    def denoise(self, img_bgr):
+        # h=3 (was 5): slightly lighter touch, faster on large images
+        return cv2.fastNlMeansDenoisingColored(
+            img_bgr, None, h=3, hColor=3, templateWindowSize=7, searchWindowSize=21
+        )
+
+    def restore_faces(self, pil_img, strength=0.6):
+        if MTCNN is None or GFPGANer is None:
+            return pil_img
+
+        mtcnn  = self._get_mtcnn()
+        gfpgan = self._get_gfpgan()
+        if mtcnn is None or gfpgan is None:
+            return pil_img
+
+        img_bgr = cv2.cvtColor(np.array(pil_img), cv2.COLOR_RGB2BGR)
+        h, w    = img_bgr.shape[:2]
+
+        boxes, _ = mtcnn.detect(pil_img)
+        if boxes is None:
+            return pil_img
+
+        out_img = img_bgr.copy()
+        for box in boxes:
+            x1, y1, x2, y2 = [int(max(0, v)) for v in box]
+            pad = int(0.3 * max(x2 - x1, y2 - y1))
+            x1n = max(0, x1 - pad);  y1n = max(0, y1 - pad)
+            x2n = min(w, x2 + pad);  y2n = min(h, y2 + pad)
+            crop = img_bgr[y1n:y2n, x1n:x2n]
+            try:
+                _, _, restored = gfpgan.enhance(
+                    crop, has_aligned=False, only_center_face=False, paste_back=True
+                )
+                blended = ((1 - strength) * crop + strength * restored).astype("uint8")
+                out_img[y1n:y2n, x1n:x2n] = blended
+            except Exception as e:
+                print(f"[FaceEnhancer] face_restore warning: {e}")
+
+        return Image.fromarray(cv2.cvtColor(out_img, cv2.COLOR_BGR2RGB))
+
+    def get_foreground_mask(self, pil_img):
+        if remove is None:
+            return None
+        bio = BytesIO()
+        pil_img.save(bio, format="PNG")
+        out     = remove(bio.getvalue())
+        out_pil = Image.open(BytesIO(out)).convert("RGBA")
+        alpha_np = np.array(out_pil.split()[-1]).astype(np.uint8)
+        _, mask  = cv2.threshold(alpha_np, 10, 255, cv2.THRESH_BINARY)
+        return mask
+
+    def apply_bokeh(self, cv2_img, mask_np, blur_strength=15.0):
+        mask   = cv2.GaussianBlur(mask_np.astype(np.float32) / 255.0, (5, 5), 0)
+        mask3  = cv2.merge([mask, mask, mask])
+        ksize  = int(max(1, blur_strength) * 2 + 1)
+        bg     = cv2.GaussianBlur(cv2_img, (ksize, ksize), 0)
+        return (cv2_img.astype("float32") * mask3 + bg.astype("float32") * (1 - mask3)).clip(0, 255).astype("uint8")
+
+    def enhance_full(
+        self,
+        pil_img,
+        bokeh_strength=0,           # ← default 0 (was 15.0) — disables rembg
+        face_restore_strength=0.6,
+        save_name=None,
+        save_dir="enhanced",
+    ):
+        """
+        Full face/image enhancement pipeline.
+
+        bokeh_strength=0 (default) skips the rembg U2Net background removal
+        call that was adding ~3-5 s per image on CPU.  Set to a positive
+        float (e.g. 15.0) to re-enable if needed.
+        """
+        # Step 1: Denoise
+        img_cv  = cv2.cvtColor(np.array(pil_img), cv2.COLOR_RGB2BGR)
+        img_db  = self.denoise(img_cv)
+
+        # Step 2: CLAHE colour correction
+        img_cc  = self.apply_clahe(img_db, clip=1.1)
+
+        # Step 3: Face restoration (GFPGAN)
+        img_pil_cc  = Image.fromarray(cv2.cvtColor(img_cc, cv2.COLOR_BGR2RGB))
+        img_face_pil = self.restore_faces(img_pil_cc, strength=face_restore_strength)
+
+        # Step 4: Bokeh — only if explicitly requested and rembg is available
+        if bokeh_strength > 0 and remove is not None:
+            mask_np = self.get_foreground_mask(img_face_pil)
+            if mask_np is not None:
+                img_cv_face = cv2.cvtColor(np.array(img_face_pil), cv2.COLOR_RGB2BGR)
+                img_bokeh   = self.apply_bokeh(img_cv_face, mask_np, blur_strength=bokeh_strength)
+                img_face_pil = Image.fromarray(cv2.cvtColor(img_bokeh, cv2.COLOR_BGR2RGB))
+
+        # Step 5: Unsharp mask / sharpening
+        img_cv_final = cv2.cvtColor(np.array(img_face_pil), cv2.COLOR_RGB2BGR)
+        img_sh       = self.unsharp_mask(img_cv_final, amount=0.5, radius=1)
+        final_pil    = Image.fromarray(cv2.cvtColor(img_sh, cv2.COLOR_BGR2RGB))
+
+        if save_name:
+            os.makedirs(save_dir, exist_ok=True)
+            save_path = os.path.join(save_dir, f"{save_name}_enhanced.png")
+            final_pil.save(save_path)
+            print(f"      [FaceEnhancer] Saved enhanced → {save_path}")
+
+        return final_pil
+</file>
+
+<file path="GEMINI.md">
+# System Instructions
+
+You are a professional Senior Generative AI Engineer and Computer vision specialist. Your role is to analyze the current codebase and assist with generative AI development tasks. You must follow these operational rules strictly:
+
+## 1. Response Protocol
+- Provide **crisp, concise, and informative** answers. 
+- Eliminate unnecessary filler or conversational fluff.
+
+## 2. Complexity Management
+- If a query is complex, **decompose it** into smaller, manageable sub-tasks.
+- Implement these tasks **progressively**, ensuring one step is successful before moving to the next.
+
+## 3. Iterative Implementation
+- For every task or prompt provided, you **must ask clarifying questions** first to ensure the best possible implementation.
+- Do not make assumptions about the architecture without verifying with me.
+
+## 4. Technical Constraints
+- Always parse and adhere to the dependencies listed in `requirements.txt`.
+- Ensure all code suggestions and logic align with the specific versions and libraries available in the environment.
+</file>
+
+<file path="image_utils.py">
+"""
+image_utils.py
+Helper utilities:
+- Image preprocessing (resize to SD-compatible multiple of 8)
+- Canny edge map generation for ControlNet
+- Visualization helpers (save side-by-side debug images)
+"""
+
+import cv2
+import numpy as np
+from PIL import Image
+import matplotlib
+matplotlib.use("Agg")   # non-interactive backend — safe for VS Code / scripts
+import matplotlib.pyplot as plt
+
+
+def preprocess_image(image_input, target_size=768):
+    """
+    Load image and resize to nearest multiple of 8 for SD stability.
+
+    Args:
+        image_input: file path (str) or PIL.Image
+        target_size: longest edge target in pixels
+
+    Returns:
+        (PIL.Image RGB, np.ndarray BGR, (new_h, new_w))
+    """
+    if isinstance(image_input, str):
+        img_bgr = cv2.imread(image_input)
+    else:
+        img_bgr = np.array(image_input)
+        img_bgr = cv2.cvtColor(img_bgr, cv2.COLOR_RGB2BGR)
+
+    h, w = img_bgr.shape[:2]
+    scale = target_size / max(h, w)
+    new_h = int(round(h * scale / 8)) * 8
+    new_w = int(round(w * scale / 8)) * 8
+    img_bgr = cv2.resize(img_bgr, (new_w, new_h), interpolation=cv2.INTER_LANCZOS4)
+    img_rgb = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2RGB)
+    img_pil = Image.fromarray(img_rgb)
+    return img_pil, img_bgr, (new_h, new_w)
+
+
+def make_canny_control_image(img_pil, low=100, high=200):
+    """Generate Canny edge map from PIL image for ControlNet conditioning."""
+    img_gray = cv2.cvtColor(np.array(img_pil), cv2.COLOR_RGB2GRAY)
+    edges = cv2.Canny(img_gray, low, high)
+    edges_rgb = cv2.cvtColor(edges, cv2.COLOR_GRAY2RGB)
+    return Image.fromarray(edges_rgb)
+
+
+def save_images(images: dict, save_path: str, figsize=(18, 6)):
+    """
+    Save multiple PIL images side-by-side with titles to disk.
+
+    Args:
+        images: dict of {title: PIL.Image or np.ndarray}
+        save_path: full path where the figure is saved (e.g. masks/debug_foo.png)
+        figsize: matplotlib figure size
+    """
+    fig, axes = plt.subplots(1, len(images), figsize=figsize)
+    if len(images) == 1:
+        axes = [axes]
+    for ax, (title, img) in zip(axes, images.items()):
+        if isinstance(img, np.ndarray):
+            img = Image.fromarray(img)
+        ax.imshow(img)
+        ax.set_title(title, fontsize=11)
+        ax.axis("off")
+    plt.tight_layout()
+    plt.savefig(save_path, dpi=100, bbox_inches="tight")
+    plt.close(fig)
+</file>
+
+<file path="inpainting.py">
+"""
+inpainting.py
+Phase 2 & 3 — Prompt Engineering & ControlNet Inpainting Inference.
+
+Key changes vs previous version
+────────────────────────────────
+1. num_inference_steps: 50 → 20
+   DPMSolverMultistepScheduler (loaded in model_loader.py) reaches
+   equivalent quality in 20 steps.  ~60 % time saving.
+
+2. Diffusion at 512 px, upscale result to original size.
+   UNet attention maps shrink from 96×96 → 64×64.
+   ~2.25× faster per step; also reduces peak VRAM.
+
+3. Per-image deterministic seed (MD5 hash of filename).
+   Removes cross-image seed bleed while staying reproducible.
+
+4. controlnet_conditioning_scale raised: [0.7, 0.4]
+   (was 0.2 on single ControlNet) — OpenPose guides garment fit,
+   Canny preserves body edges.
+
+5. guidance_scale lowered: 12.0 → 7.5
+   High CFG costs extra UNet forward passes per step on some
+   schedulers and adds harshness without quality gain on DPM++.
+"""
+
+import hashlib
+import torch
+import numpy as np
+from PIL import Image
+
+from image_utils import make_canny_control_image
+from model_loader import DEVICE_DIFF
+
+# ── Prompt Configuration ───────────────────────────────────────────────────────
+POSITIVE_PROMPT = (
+    "(bright neon lime green zip-up hoodie:1.9), "
+    "(vivid solid lime green:1.7), "
+    "(black spray paint graffiti all over the hoodie:1.5), "
+    "black cartoon doodles, smiley face graffiti tags, "
+    "cotton fleece hoodie material, hood visible at top, "
+    "front zipper, kangaroo pocket, "
+    "photorealistic clothing, sharp detail, 8k"
+)
+
+NEGATIVE_PROMPT = (
+    "(knitted:1.8), (sweater:1.8), (wool:1.7), "
+    "(vest:1.6), (inner layer:1.5), "
+    "(black hoodie:1.8), (dark:1.7), (denim:1.6), "
+    "skin on clothes, neck exposed in garment, "
+    "deformed, blurry, unrealistic, low quality"
+)
+
+# ── Diffusion Hyperparameters ──────────────────────────────────────────────────
+DIFFUSION_CONFIG = {
+    "num_inference_steps": 20,    # ← was 50; DPM++ reaches same quality
+    "guidance_scale": 7.5,        # ← was 12.0; 7.5 is optimal for DPM++
+    "strength": 0.97,
+    "diffusion_size": 512,        # ← run diffusion at 512, upscale after
+}
+
+# ── Conditioning scales for [OpenPose, Canny] ─────────────────────────────────
+CONTROLNET_SCALES = [0.7, 0.4]
+
+
+def _make_seed(image_path: str) -> int:
+    """Deterministic per-image seed from filename. Reproducible, no cross-bleed."""
+    return int(hashlib.md5(image_path.encode()).hexdigest()[:8], 16) % (2 ** 32)
+
+
+def run_inpainting(
+    img_pil: Image.Image,
+    soft_mask: np.ndarray,
+    pipe,
+    config: dict = None,
+    openpose_gen=None,
+    image_path: str = "",
+) -> Image.Image:
+    """
+    Run MultiControlNet (OpenPose + Canny) inpainting on a single image.
+
+    Pipeline
+    ────────
+    1. Downscale image + mask to diffusion_size (512 px longest edge).
+    2. Generate OpenPose skeleton image and Canny edge map at 512 px.
+    3. Run SD inpainting with 20 DPM++ steps.
+    4. Upscale result back to original resolution.
+    5. Alpha-blend with original using the original-resolution soft mask.
+
+    Args:
+        img_pil      : PIL Image (RGB) — already cropped + enhanced
+        soft_mask    : np.ndarray (H, W) uint8 — Gaussian-blurred clothing mask
+        pipe         : loaded StableDiffusionControlNetInpaintPipeline
+        config       : override dict (defaults to DIFFUSION_CONFIG)
+        openpose_gen : OpenposeDetector instance (from controlnet-aux)
+        image_path   : original file path used to derive a per-image seed
+
+    Returns:
+        PIL Image — garment composited onto original at original resolution
+    """
+    if config is None:
+        config = DIFFUSION_CONFIG
+
+    orig_size = img_pil.size          # (W, H) — save for final upscale
+    orig_h, orig_w = orig_size[1], orig_size[0]
+
+    # ── 1. Downscale to diffusion_size for faster UNet passes ─────────────────
+    diff_size = config.get("diffusion_size", 512)
+    scale     = diff_size / max(orig_h, orig_w)
+    diff_w    = int(round(orig_w * scale / 8)) * 8
+    diff_h    = int(round(orig_h * scale / 8)) * 8
+
+    img_small  = img_pil.resize((diff_w, diff_h), Image.LANCZOS)
+    mask_small = Image.fromarray(soft_mask).convert("L").resize(
+        (diff_w, diff_h), Image.LANCZOS
+    )
+
+    # ── 2. Control images at diffusion resolution ──────────────────────────────
+    canny_image = make_canny_control_image(img_small, low=80, high=180)
+
+    if openpose_gen is not None:
+        pose_image = openpose_gen(img_small)
+    else:
+        # Fallback: reuse Canny when OpenPose is unavailable
+        pose_image = canny_image
+
+    control_images = [pose_image, canny_image]
+
+    # ── 3. Per-image deterministic seed ───────────────────────────────────────
+    seed      = _make_seed(image_path) if image_path else 42
+    # NOTE: use "cpu" for the generator when enable_model_cpu_offload is active
+    generator = torch.Generator(device="cpu").manual_seed(seed)
+
+    # ── 4. Diffusion at 512 px ─────────────────────────────────────────────────
+    result_small = pipe(
+        prompt=POSITIVE_PROMPT,
+        negative_prompt=NEGATIVE_PROMPT,
+        image=img_small,
+        mask_image=mask_small,
+        control_image=control_images,
+        num_inference_steps=config["num_inference_steps"],
+        guidance_scale=config["guidance_scale"],
+        strength=config["strength"],
+        controlnet_conditioning_scale=CONTROLNET_SCALES,
+        generator=generator,
+        height=diff_h,
+        width=diff_w,
+    ).images[0]
+
+    # ── 5. Upscale result back to original resolution ─────────────────────────
+    result = result_small.resize(orig_size, Image.LANCZOS)
+
+    # ── 6. Alpha-blend onto original using original-resolution soft mask ───────
+    orig_np   = np.array(img_pil).astype(np.float32)
+    result_np = np.array(result).astype(np.float32)
+    alpha     = (soft_mask.astype(np.float32) / 255.0)[..., np.newaxis]
+    composited = (result_np * alpha + orig_np * (1 - alpha)).astype(np.uint8)
+
+    return Image.fromarray(composited)
+</file>
+
+<file path="INSTALL.md">
+# Virtual Try-On — Installation & Usage Guide
+
+## Project Structure
+
+```
+project_root/
+│
+├── main.py                  # Entry point — run this
+├── model_loader.py          # Loads SAM, MediaPipe, Diffusion pipeline
+├── weight_downloader.py     # Downloads model weights automatically
+├── image_utils.py           # Preprocessing, Canny edge, save helpers
+├── pose_extraction.py       # MediaPipe pose landmark extraction
+├── skin_segmentation.py     # MediaPipe skin/face/hair mask
+├── clothing_mask.py         # IDM-VTON style clothing mask generation
+├── inpainting.py            # ControlNet inpainting inference + prompts
+├── requirements.txt         # Python dependencies
+│
+├── input/                   # ← Place your input images here (JPG/PNG)
+├── output/                  # ← Final try-on results saved here
+├── masks/                   # ← Mask debug composites saved here
+└── weights/                 # ← Model weights downloaded here automatically
+```
+
+---
+
+## Step-by-Step Installation
+
+### 1. Create a virtual environment (recommended)
+
+```bash
+python -m venv venv
+# Windows
+venv\Scripts\activate
+# Linux / macOS
+source venv/bin/activate
+```
+
+### 2. Install PyTorch with CUDA support (do this FIRST)
+
+Check your CUDA version with `nvidia-smi`, then install the matching build:
+
+**CUDA 11.8:**
+```bash
+pip install torch==2.1.2 torchvision==0.16.2 --index-url https://download.pytorch.org/whl/cu118
+```
+
+**CUDA 12.1:**
+```bash
+pip install torch==2.1.2 torchvision==0.16.2 --index-url https://download.pytorch.org/whl/cu121
+```
+
+### 3. Install Segment Anything Model (SAM)
+
+```bash
+pip install git+https://github.com/facebookresearch/segment-anything.git
+```
+
+### 4. Install remaining dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+> **Note:** If `xformers` fails to install from requirements.txt,
+> install it separately matching your CUDA version:
+> ```bash
+> pip install xformers --index-url https://download.pytorch.org/whl/cu118
+> ```
+
+### 5. (Important) Uninstall conflicting protobuf if present
+
+The notebook explicitly requires:
+```bash
+pip uninstall -y mediapipe protobuf
+pip install protobuf==4.25.3 mediapipe==0.10.14
+```
+
+---
+
+## Usage
+
+1. Place your input images (JPG or PNG) in the `input/` folder.
+2. Run the pipeline:
+
+```bash
+python main.py
+```
+
+3. Results are saved to:
+   - `output/<filename>_green_hoodie.png` — final try-on image
+   - `masks/<filename>_mask_debug.png` — mask debug composite (4-panel)
+
+---
+
+## GPU Memory Notes
+
+- Your shared GPU VRAM is **~7.8 GB**.
+- The pipeline runs both SAM and the diffusion model on `cuda:0`
+  (single GPU mode, since only one GPU is available).
+- If you run out of VRAM:
+  - Reduce `target_size` in `preprocess_image()` from `768` to `512`.
+  - Reduce `num_inference_steps` in `DIFFUSION_CONFIG` from `50` to `30`.
+
+---
+
+## Weights Downloaded Automatically
+
+| Model | Size | Source |
+|---|---|---|
+| SAM ViT-H | ~2.4 GB | Meta AI |
+| Pose Landmarker Heavy | ~29 MB | MediaPipe |
+| Selfie Multiclass | ~1 MB | MediaPipe |
+| Realistic Vision V5.1 | ~2.2 GB | HuggingFace (auto) |
+| ControlNet Canny | ~1.5 GB | HuggingFace (auto) |
+</file>
+
+<file path="model_loader.py">
+"""
+model_loader.py
+Handles loading of all models with RTX 3050 (6GB) optimisations:
+- SAM ViT-H       → cuda:0 (offloaded after mask generation)
+- MediaPipe Pose  → CPU
+- MediaPipe Skin  → CPU
+- MultiControlNet (OpenPose + Canny) + SD Inpainting → cuda:0
+  with enable_model_cpu_offload so the full stack never sits in
+  VRAM simultaneously.
+
+Key changes vs previous version
+────────────────────────────────
+1. enable_model_cpu_offload()  instead of .to(DEVICE_DIFF)
+   → prevents OOM when both ControlNets + UNet + VAE are present.
+2. DPMSolverMultistepScheduler (use_karras_sigmas=True)
+   → reaches same quality in 20 steps that UniPC needs 50 for.
+3. openpose_gen is REMOVED from this loader and inlined in
+   inpainting.py so it runs only once per call instead of being
+   held as a live model in VRAM.
+"""
+
+import os
+import torch
+import mediapipe as mp
+from segment_anything import sam_model_registry, SamPredictor
+from diffusers.pipelines.controlnet import MultiControlNetModel
+from diffusers import (
+    StableDiffusionControlNetInpaintPipeline,
+    ControlNetModel,
+    DPMSolverMultistepScheduler,   # ← replaces UniPCMultistepScheduler
+)
+
+# ── Paths ──────────────────────────────────────────────────────────────────────
+SAM_CHECKPOINT        = "weights/sam_vit_h_4b8939.pth"
+POSE_LANDMARKER_MODEL = "weights/pose_landmarker_heavy.task"
+MP_MODEL_PATH         = "weights/selfie_multiclass_256x256.tflite"
+
+# ── Device ─────────────────────────────────────────────────────────────────────
+# Single GPU setup — SAM and diffusion share cuda:0.
+# enable_model_cpu_offload manages streaming between CPU↔GPU automatically.
+DEVICE_SAM  = "cuda:0" if torch.cuda.is_available() else "cpu"
+DEVICE_DIFF = "cuda:0" if torch.cuda.is_available() else "cpu"
+
+
+def load_sam():
+    """Load SAM ViT-H on GPU. Caller is responsible for offloading after use."""
+    sam = sam_model_registry["vit_h"](checkpoint=SAM_CHECKPOINT)
+    sam.to(DEVICE_SAM)
+    predictor = SamPredictor(sam)
+    print(f"✅ SAM loaded on {DEVICE_SAM}")
+    return predictor
+
+
+def load_pose_landmarker():
+    """Load MediaPipe Pose Landmarker (CPU)."""
+    BaseOptions           = mp.tasks.BaseOptions
+    PoseLandmarker        = mp.tasks.vision.PoseLandmarker
+    PoseLandmarkerOptions = mp.tasks.vision.PoseLandmarkerOptions
+
+    opts = PoseLandmarkerOptions(
+        base_options=BaseOptions(model_asset_path=POSE_LANDMARKER_MODEL),
+        running_mode=mp.tasks.vision.RunningMode.IMAGE,
+    )
+    detector = PoseLandmarker.create_from_options(opts)
+    print("✅ MediaPipe Pose Landmarker loaded.")
+    return detector
+
+
+def load_skin_segmenter():
+    """Load MediaPipe Selfie Multiclass Segmenter (CPU)."""
+    BaseOptions           = mp.tasks.BaseOptions
+    ImageSegmenter        = mp.tasks.vision.ImageSegmenter
+    ImageSegmenterOptions = mp.tasks.vision.ImageSegmenterOptions
+
+    opts = ImageSegmenterOptions(
+        base_options=BaseOptions(model_asset_path=MP_MODEL_PATH),
+        output_category_mask=True,
+    )
+    segmenter = ImageSegmenter.create_from_options(opts)
+    print("✅ MediaPipe Skin Segmenter loaded.")
+    return segmenter
+
+
+def load_openpose_generator():
+    """
+    Load OpenPose detector (controlnet-aux).
+    Kept as a separate loader so main.py can pass it into run_inpainting.
+    Model runs on CPU — it is lightweight enough and avoids competing
+    with the diffusion pipeline for VRAM.
+    """
+    from controlnet_aux import OpenposeDetector
+    openpose = OpenposeDetector.from_pretrained("lllyasviel/ControlNet")
+    print("✅ OpenPose generator loaded (CPU).")
+    return openpose
+
+
+def load_diffusion_pipeline():
+    """
+    Load MultiControlNet (OpenPose + Canny) + SD Inpainting pipeline.
+
+    OPTIMISATIONS applied
+    ─────────────────────
+    • enable_model_cpu_offload()
+        Streams each sub-model (ControlNets, UNet, VAE) to GPU only
+        when needed, then back to CPU.  Peak VRAM ~3.5 GB instead of
+        ~7+ GB — prevents OOM and removes the PCIe thrashing that
+        caused the 10-minute per-image timing.
+
+    • DPMSolverMultistepScheduler (karras sigmas)
+        20 steps ≈ 50 UniPC steps in quality for inpainting tasks.
+        Cuts diffusion time by ~60 %.
+
+    • xformers memory-efficient attention (if installed)
+        ~20 % additional VRAM saving and speed-up on top of the above.
+
+    NOTE: Do NOT call .to(device) after enable_model_cpu_offload —
+    the pipeline manages placement itself.
+    """
+    pose_controlnet = ControlNetModel.from_pretrained(
+        "lllyasviel/control_v11p_sd15_openpose",
+        torch_dtype=torch.float16,
+    )
+    canny_controlnet = ControlNetModel.from_pretrained(
+        "lllyasviel/control_v11p_sd15_canny",
+        torch_dtype=torch.float16,
+    )
+
+    pipe = StableDiffusionControlNetInpaintPipeline.from_pretrained(
+        "SG161222/Realistic_Vision_V5.1_noVAE",
+        controlnet=MultiControlNetModel([pose_controlnet, canny_controlnet]),
+        torch_dtype=torch.float16,
+        safety_checker=None,
+    )
+
+    # ── Scheduler: DPM++ 2M Karras — 20 steps replaces 50 UniPC steps ─────────
+    pipe.scheduler = DPMSolverMultistepScheduler.from_config(
+        pipe.scheduler.config,
+        use_karras_sigmas=True,
+        algorithm_type="dpmsolver++",
+    )
+
+    # ── VRAM optimisations ─────────────────────────────────────────────────────
+    # CPU offload: keeps peak VRAM low, no manual .to() calls needed.
+    pipe.enable_model_cpu_offload()
+
+    # Attention slicing: reduce peak attention memory per step.
+    pipe.enable_attention_slicing(1)
+
+    # xformers: ~20 % speed/VRAM win when installed.
+    try:
+        pipe.enable_xformers_memory_efficient_attention()
+        print("✅ xformers memory-efficient attention enabled.")
+    except Exception as e:
+        print(f"⚠️  xformers not available ({e}), using default attention.")
+
+    print("✅ Diffusion pipeline loaded with CPU offload + DPM++ scheduler.")
+    return pipe
+</file>
+
+<file path="neck_blend.py">
+"""
+neck_blend.py
+Neck Blending Fix — Post-processes the clothing mask to prevent
+the hoodie from overlapping the neck/skin area.
+
+Strategy:
+  1. Erode the skin protection mask to get a tighter skin boundary.
+  2. Subtract the eroded skin mask from the soft clothing mask.
+  3. Apply a localised vertical gradient fade at the top of the
+     remaining mask so the collar transitions smoothly into skin.
+
+Usage (drop-in, no core logic change):
+    from neck_blend import apply_neck_blend
+    soft_mask = apply_neck_blend(soft_mask, skin_mask)
+"""
+
+import cv2
+import numpy as np
+
+
+def apply_neck_blend(
+    soft_mask: np.ndarray,
+    skin_mask: np.ndarray,
+    erode_iters: int = 6,
+    fade_px: int = 30,
+) -> np.ndarray:
+    """
+    Refine soft_mask to exclude skin/neck pixels with a smooth boundary.
+
+    Args:
+        soft_mask   : (H, W) uint8 — Gaussian-blurred clothing mask from get_clothing_mask()
+        skin_mask   : (H, W) uint8 — protection mask from get_skin_mask() (face+neck+hair=255)
+        erode_iters : how many erosion steps to shrink the skin mask inward
+                      (removes the noisy fringe at the skin/clothing boundary)
+        fade_px     : vertical pixel height of the top-of-mask gradient fade
+
+    Returns:
+        refined_soft_mask : (H, W) uint8 — mask safe to pass directly to run_inpainting()
+    """
+    h, w = soft_mask.shape[:2]
+
+    # ── Step 1: Erode skin mask to tighten the protected region ───────────────
+    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (9, 9))
+    tight_skin = cv2.erode(skin_mask, kernel, iterations=erode_iters)
+
+    # ── Step 2: Subtract skin region from clothing mask ────────────────────────
+    # Where tight_skin == 255, force mask to 0 (no generation over skin)
+    result = soft_mask.copy().astype(np.float32)
+    skin_f = tight_skin.astype(np.float32) / 255.0
+    result = result * (1.0 - skin_f)
+
+    # ── Step 3: Localised vertical fade at the TOP of the mask ────────────────
+    # Find the topmost row where the mask is non-zero (after skin subtraction)
+    col_max = result.max(axis=1)          # (H,) — max value per row
+    nonzero_rows = np.where(col_max > 10)[0]
+
+    if len(nonzero_rows) > 0:
+        top_row = int(nonzero_rows[0])
+        fade_end = min(top_row + fade_px, h)
+
+        # Apply a linear alpha ramp over [top_row, fade_end]
+        ramp_len = fade_end - top_row
+        if ramp_len > 1:
+            ramp = np.linspace(0.0, 1.0, ramp_len, dtype=np.float32)  # (ramp_len,)
+            result[top_row:fade_end, :] *= ramp[:, np.newaxis]
+
+    # ── Step 4: Clip and return ────────────────────────────────────────────────
+    return np.clip(result, 0, 255).astype(np.uint8)
+</file>
+
+<file path="pose_extraction.py">
+"""
+pose_extraction.py
+Phase 1a — Pose Landmark Extraction using MediaPipe Tasks API.
+
+Key landmarks used downstream:
+  Shoulders : 11, 12
+  Elbows    : 13, 14
+  Hips      : 23, 24
+  Hands     : 15–22
+"""
+
+import mediapipe as mp
+import numpy as np
+
+
+def extract_pose_landmarks(img_rgb: np.ndarray, pose_detector):
+    """
+    Extract 33 MediaPipe Pose landmarks from an RGB image.
+
+    Args:
+        img_rgb   : np.ndarray (H, W, 3) in RGB
+        pose_detector : loaded MediaPipe PoseLandmarker instance
+
+    Returns:
+        lm_px (dict {idx: (x_px, y_px)}), img_rgb (unchanged)
+    """
+    mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=img_rgb)
+    detection_result = pose_detector.detect(mp_image)
+
+    if not detection_result.pose_landmarks:
+        raise ValueError("No person detected by MediaPipe.")
+
+    h, w = img_rgb.shape[:2]
+    lm_px = {}
+    for idx, lm in enumerate(detection_result.pose_landmarks[0]):
+        lm_px[idx] = (int(lm.x * w), int(lm.y * h))
+
+    return lm_px, img_rgb
+
+
+def get_torso_bbox(lm_px: dict, h: int, w: int, pad_v=0.15, pad_h=0.18):
+    """
+    Compute torso bounding box from shoulder + elbow + hip landmarks.
+
+    Args:
+        lm_px : landmark pixel dict
+        h, w  : image height and width
+        pad_v : vertical padding fraction
+        pad_h : horizontal padding fraction
+
+    Returns:
+        (x1, y1, x2, y2)
+    """
+    torso_indices = [11, 12, 13, 14, 23, 24]
+    xs = [lm_px[i][0] for i in torso_indices if i in lm_px]
+    ys = [lm_px[i][1] for i in torso_indices if i in lm_px]
+    x1 = max(0, int(min(xs) - pad_h * w))
+    y1 = max(0, int(min(ys) - pad_v * h))
+    x2 = min(w, int(max(xs) + pad_h * w))
+    y2 = min(h, int(max(ys) + pad_v * h))
+    return x1, y1, x2, y2
+
+
+def get_hand_points(lm_px: dict) -> np.ndarray:
+    """
+    Return pixel coordinates of all hand landmarks (indices 15–22).
+    Used as SAM negative prompts to exclude hands from the clothing mask.
+    """
+    hand_indices = [15, 16, 17, 18, 19, 20, 21, 22]
+    return np.array([lm_px[i] for i in hand_indices if i in lm_px])
+</file>
+
+<file path="README.md">
+# virtual-try-on
+Cloth changing using generative ai
+</file>
+
+<file path="scorecard_processor.py">
+import os
+import cv2
+import numpy as np
+import onnxruntime as ort
+import mediapipe as mp
+from PIL import Image
+
+mp_pose = mp.solutions.pose
+
+class ScorecardProcessor:
+    def __init__(self, modnet_path, template_with_person_path, template_bg_path):
+        """
+        Initializes the ScorecardProcessor with MODNet and template info.
+        """
+        print(f"[Scorecard] Initializing MODNet from {modnet_path}...")
+        self.session = ort.InferenceSession(modnet_path)
+        self.template_bg = cv2.imread(template_bg_path)
+        if self.template_bg is None:
+            raise FileNotFoundError(f"Template background not found: {template_bg_path}")
+        
+        print(f"[Scorecard] Calculating template shoulder reference from {template_with_person_path}...")
+        self.template_info = self._find_shoulders(template_with_person_path)
+        if self.template_info is None:
+            raise ValueError("Could not detect shoulders in the template image. Please check the template reference.")
+        
+        self.ltx, self.lty = self.template_info["left_shoulder"]
+        self.rtx, self.rty = self.template_info["right_shoulder"]
+        self.template_width = self.template_info["width"]
+
+    def _find_shoulders(self, image_input):
+        """
+        Detects left and right shoulders using MediaPipe Pose.
+        image_input can be a file path or a BGR numpy array.
+        """
+        if isinstance(image_input, str):
+            img = cv2.imread(image_input)
+        else:
+            img = image_input
+
+        if img is None:
+            return None
+
+        h, w = img.shape[:2]
+        with mp_pose.Pose(static_image_mode=True) as pose:
+            # MediaPipe expects RGB
+            res = pose.process(cv2.cvtColor(img[:, :, :3], cv2.COLOR_BGR2RGB))
+
+        if not res.pose_landmarks:
+            return None
+
+        lm = res.pose_landmarks.landmark
+        left = (int(lm[11].x * w), int(lm[11].y * h))
+        right = (int(lm[12].x * w), int(lm[12].y * h))
+
+        return {
+            "left_shoulder": left,
+            "right_shoulder": right,
+            "width": np.linalg.norm(np.array(left) - np.array(right))
+        }
+
+    def remove_background(self, img_bgr):
+        """
+        Removes background using MODNet and returns a BGRA image.
+        """
+        h, w = img_bgr.shape[:2]
+        # MODNet Pre-processing (512x512 RGB normalized to [-1, 1])
+        img_rgb = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2RGB)
+        input_img = cv2.resize(img_rgb, (512, 512))
+        input_img = (input_img.astype(np.float32) - 127.5) / 127.5
+        input_img = np.transpose(input_img, (2, 0, 1))[None, ...]
+
+        input_name = self.session.get_inputs()[0].name
+        matte = self.session.run(None, {input_name: input_img})[0]
+        matte = np.squeeze(matte)
+        matte = cv2.resize(matte, (w, h))
+        matte = np.clip(matte, 0.0, 1.0)
+
+        alpha = (matte * 255).astype(np.uint8)
+        if alpha.ndim == 2:
+            alpha = alpha[:, :, None]
+
+        # Combine BGR and Alpha
+        bgra = np.concatenate([img_bgr, alpha], axis=2)
+        return bgra
+
+    def overlay_on_template(self, user_bgra):
+        """
+        Rescales user image based on shoulders and overlays onto the template.
+        """
+        user_info = self._find_shoulders(user_bgra)
+        if user_info is None:
+            print("[Scorecard] Warning: Shoulders not detected in generated image. Skipping overlay.")
+            return None
+
+        lux, luy = user_info["left_shoulder"]
+        user_width = user_info["width"]
+
+        # Calculate scale to match template shoulder width
+        scale = self.template_width / user_width
+        
+        uh, uw = user_bgra.shape[:2]
+        scaled_user = cv2.resize(
+            user_bgra,
+            (int(uw * scale), int(uh * scale)),
+            interpolation=cv2.INTER_LINEAR
+        )
+
+        lux_s, luy_s = int(lux * scale), int(luy * scale)
+        dx = self.ltx - lux_s
+        dy = self.lty - luy_s
+
+        # Overlay logic
+        bg = self.template_bg.copy()
+        h, w = scaled_user.shape[:2]
+
+        # Clip overlay region if it goes out of bounds
+        x1, y1 = max(dx, 0), max(dy, 0)
+        x2, y2 = min(dx + w, bg.shape[1]), min(dy + h, bg.shape[0])
+
+        overlay_x1 = max(0, -dx)
+        overlay_y1 = max(0, -dy)
+        overlay_x2 = overlay_x1 + (x2 - x1)
+        overlay_y2 = overlay_y1 + (y2 - y1)
+
+        if x1 >= x2 or y1 >= y2:
+            return bg
+
+        alpha = scaled_user[overlay_y1:overlay_y2, overlay_x1:overlay_x2, 3] / 255.0
+        for c in range(3):
+            bg[y1:y2, x1:x2, c] = (
+                alpha * scaled_user[overlay_y1:overlay_y2, overlay_x1:overlay_x2, c]
+                + (1 - alpha) * bg[y1:y2, x1:x2, c]
+            )
+
+        return bg
+</file>
+
+<file path="skin_segmentation.py">
+"""
+skin_segmentation.py
+Phase 1b — MediaPipe Skin Segmentation.
+
+Uses the selfie_multiclass_256x256 model to isolate skin/face/hair pixels.
+This protection mask is later SUBTRACTED from the SAM clothing mask
+to prevent neck/hand bleed-through into the generated garment.
+
+Label map:
+  0 = Background
+  1 = Hair
+  2 = Body / Skin
+  3 = Face
+  4 = Clothes
+"""
+
+import mediapipe as mp
+import numpy as np
+
+
+def get_skin_mask(img_rgb: np.ndarray, skin_segmenter) -> np.ndarray:
+    """
+    Compute a protection mask covering skin (2), face (3), and hair (1).
+
+    Args:
+        img_rgb       : np.ndarray (H, W, 3) RGB
+        skin_segmenter: loaded MediaPipe ImageSegmenter instance
+
+    Returns:
+        protection_mask : np.ndarray (H, W) uint8, values 0 or 255
+    """
+    mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=img_rgb)
+    result = skin_segmenter.segment(mp_image)
+    category_mask = result.category_mask.numpy_view()
+
+    # Protect hair (1), body/skin (2), and face (3)
+    protection_mask = np.zeros(category_mask.shape, dtype=np.uint8)
+    protection_mask[
+        (category_mask == 1) | (category_mask == 2) | (category_mask == 3)
+    ] = 255
+
+    return protection_mask
+</file>
+
+<file path="main.py">
+"""
+main.py
+Entry point for the Virtual Try-On pipeline.
+
+Key changes vs previous version
+────────────────────────────────
+1. Two-pass loop: pre-compute ALL masks first, then run ALL diffusion.
+   Keeps GPU warm between diffusion calls; eliminates cold-start on
+   each image.
+
+2. Face enhancement bokeh disabled (bokeh_strength=0).
+   rembg (U2Net) was running a full background-removal neural net
+   per image just for background blur — expensive with no quality
+   gain on the hoodie output.
+
+3. Mask debug save moved to a background thread (ThreadPoolExecutor).
+   matplotlib savefig at 18×6 figsize was blocking the CPU for
+   ~1-2 s per image while the GPU sat idle.
+
+4. image_path forwarded to run_inpainting for per-image seeding.
+
+5. SAM predictor is imported but currently unused in the clothing-mask
+   path.  It is still loaded so the pipeline stays drop-in compatible.
+"""
+
+import os
+import glob
+import cv2
+import numpy as np
+from PIL import Image
+from concurrent.futures import ThreadPoolExecutor
+
+# ── Directory Setup ────────────────────────────────────────────────────────────
+INPUT_DIR    = "input"
+OUTPUT_DIR   = "output"
+MASK_DIR     = "masks"
+SCORECARD_DIR = "scorecard"
+
+for d in (INPUT_DIR, OUTPUT_DIR, MASK_DIR, SCORECARD_DIR):
+    os.makedirs(d, exist_ok=True)
+
+# ── Step 0: Download weights ───────────────────────────────────────────────────
+from weight_downloader import download_weights
+download_weights()
+
+# ── Import pipeline helpers ────────────────────────────────────────────────────
+from face_enhancer    import FaceEnhancer
+from image_utils      import preprocess_image, save_images
+from pose_extraction  import extract_pose_landmarks, get_torso_bbox
+from skin_segmentation import get_skin_mask
+from clothing_mask    import get_clothing_mask
+from inpainting       import run_inpainting
+from neck_blend       import apply_neck_blend
+from autocrop         import crop_to_hands
+from scorecard_processor import ScorecardProcessor
+
+# ── Step 1: Load all models once ──────────────────────────────────────────────
+from model_loader import (
+    load_sam, load_pose_landmarker, load_skin_segmenter,
+    load_diffusion_pipeline, load_openpose_generator,
+)
+
+print("\n[Model Loading] Loading all models...")
+sam_predictor  = load_sam()
+pose_detector  = load_pose_landmarker()
+skin_segmenter = load_skin_segmenter()
+openpose_gen   = load_openpose_generator()
+pipe           = load_diffusion_pipeline()
+face_enhancer  = FaceEnhancer()
+print("[Model Loading] All models loaded.\n")
+
+# ── Scorecard processor ────────────────────────────────────────────────────────
+print("[Scorecard] Initializing post-processing models...")
+scorecard_proc = ScorecardProcessor(
+    "weights/modnet_photographic_portrait_matting.onnx",
+    "template/template_1/template_1696_2528.png",
+    "template/template_1/template_not_human_1696_2528.png",
+)
+
+# ── Background thread pool for non-blocking mask debug saves ──────────────────
+_save_pool = ThreadPoolExecutor(max_workers=2)
+
+
+def _save_mask_debug_async(img_rgb, refined_mask, soft_mask, save_path):
+    """Save mask debug composite in a background thread (non-blocking)."""
+    grey_overlay = img_rgb.copy().astype(np.float32)
+    alpha_arr    = (refined_mask.astype(np.float32) / 255.0)[..., np.newaxis]
+    grey_color   = np.array([128, 128, 128], dtype=np.float32)
+    grey_overlay = (grey_color * alpha_arr + grey_overlay * (1 - alpha_arr)).astype(np.uint8)
+    save_images(
+        {
+            "Original":                  img_rgb,
+            "Refined Binary Mask":       refined_mask,
+            "Soft Mask (Gaussian)":      soft_mask,
+            "Mask Overlay (IDM style)":  grey_overlay,
+        },
+        save_path=save_path,
+        figsize=(18, 6),
+    )
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# PASS 1 — Pre-compute all masks (CPU-heavy, GPU idle)
+# ══════════════════════════════════════════════════════════════════════════════
+
+def precompute_single(image_path: str):
+    """
+    Run all CPU-side preprocessing for one image and return everything
+    needed by the diffusion step.
+
+    Returns dict with keys: img_pil, soft_mask, fname
+    Returns None on failure.
+    """
+    fname = os.path.splitext(os.path.basename(image_path))[0]
+    try:
+        # Step 1 — Load + resize
+        img_pil, img_bgr, (h, w) = preprocess_image(image_path, target_size=768)
+        img_rgb = np.array(img_pil)
+        print(f"  [precompute] {fname}: loaded {w}×{h}")
+
+        # Step 2 — Pose landmarks
+        lm_px, _ = extract_pose_landmarks(img_rgb, pose_detector)
+        torso_bbox = get_torso_bbox(lm_px, h, w, pad_v=0.08, pad_h=0.18)
+
+        # Step 2b — Horizontal crop to hands
+        img_pil, img_bgr, (h, w) = crop_to_hands(img_pil, img_bgr, lm_px, fname=fname)
+        img_rgb = np.array(img_pil)
+
+        # Step 2c — Face enhancement
+        # bokeh_strength=0 disables rembg (U2Net) background removal which
+        # was adding ~3-5 s per image with no gain on the hoodie result.
+        img_pil = face_enhancer.enhance_full(img_pil, bokeh_strength=0, save_name=fname)
+        img_rgb = np.array(img_pil)
+
+        # Step 3 — Skin mask
+        skin_mask = get_skin_mask(img_rgb, skin_segmenter)
+
+        # Step 4 — Clothing mask
+        refined_mask, soft_mask = get_clothing_mask(img_rgb, lm_px, skin_mask, torso_bbox)
+        soft_mask = apply_neck_blend(soft_mask, skin_mask)
+
+        # Save mask debug asynchronously (does not block the loop)
+        mask_path = os.path.join(MASK_DIR, f"{fname}_mask_debug.png")
+        _save_pool.submit(_save_mask_debug_async, img_rgb, refined_mask, soft_mask, mask_path)
+        print(f"  [precompute] {fname}: mask queued for async save")
+
+        return {"img_pil": img_pil, "soft_mask": soft_mask, "fname": fname,
+                "image_path": image_path}
+
+    except Exception as e:
+        print(f"  [precompute] ✗ {fname}: {e}")
+        return None
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# PASS 2 — Diffusion (GPU-heavy)
+# ══════════════════════════════════════════════════════════════════════════════
+
+def diffuse_single(item: dict):
+    """
+    Run ControlNet inpainting for one pre-computed item.
+    Returns (result_pil, fname) or raises on failure.
+    """
+    return run_inpainting(
+        img_pil=item["img_pil"],
+        soft_mask=item["soft_mask"],
+        pipe=pipe,
+        openpose_gen=openpose_gen,
+        image_path=item["image_path"],
+    ), item["fname"]
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# Main
+# ══════════════════════════════════════════════════════════════════════════════
+
+def main():
+    image_paths = sorted(
+        glob.glob(os.path.join(INPUT_DIR, "*.jpg"))
+        + glob.glob(os.path.join(INPUT_DIR, "*.jpeg"))
+        + glob.glob(os.path.join(INPUT_DIR, "*.png"))
+    )
+
+    if not image_paths:
+        print(f"⚠️  No images found in '{INPUT_DIR}/'. Add JPG/PNG images and re-run.")
+        return
+
+    print(f"\nFound {len(image_paths)} image(s) in '{INPUT_DIR}/'.")
+
+    # ── Pass 1: pre-compute masks for all images ───────────────────────────────
+    print("\n── Pass 1: Pre-computing masks ──────────────────────────────────────")
+    prepared = []
+    for image_path in image_paths:
+        item = precompute_single(image_path)
+        if item is not None:
+            prepared.append(item)
+
+    print(f"\n── Pass 2: Diffusion ({len(prepared)} images) ───────────────────────")
+
+    success_count = 0
+    for i, item in enumerate(prepared):
+        fname    = item["fname"]
+        out_path = os.path.join(OUTPUT_DIR, f"{fname}_green_hoodie.png")
+
+        try:
+            result, _ = diffuse_single(item)
+            result.save(out_path)
+            print(f"[{i+1}/{len(prepared)}] ✓ Try-on saved → {out_path}")
+
+            # ── Scorecard post-processing ──────────────────────────────────────
+            print(f"[{i+1}/{len(prepared)}] Creating scorecard...")
+            result_bgr       = cv2.cvtColor(np.array(result), cv2.COLOR_RGB2BGR)
+            transparent_user = scorecard_proc.remove_background(result_bgr)
+            final_scorecard  = scorecard_proc.overlay_on_template(transparent_user)
+
+            if final_scorecard is not None:
+                sc_path = os.path.join(SCORECARD_DIR, f"{fname}_scorecard.png")
+                cv2.imwrite(sc_path, final_scorecard)
+                print(f"[{i+1}/{len(prepared)}] ✓ Scorecard saved → {sc_path}")
+
+            success_count += 1
+
+        except Exception as e:
+            print(f"[{i+1}/{len(prepared)}] ✗ Failed — {fname}: {e}")
+
+    # Wait for any pending mask-debug saves before exiting
+    _save_pool.shutdown(wait=True)
+
+    print(f"\n{'='*55}")
+    print(f"Completed : {success_count}/{len(prepared)} successful")
+    print(f"Results   → {OUTPUT_DIR}/")
+    print(f"Masks     → {MASK_DIR}/")
+    print(f"{'='*55}")
+
+
+if __name__ == "__main__":
+    main()
+</file>
+
+<file path="requirements.txt">
+# Core deep-learning stack (Updated for Python 3.12)
+torch==2.2.1
+torchvision==0.17.1
+
+# Diffusion & ControlNet
+diffusers==0.25.1
+transformers==4.36.2
+accelerate==0.26.1
+xformers>=0.0.24
+
+# MediaPipe & Protobuf (Specific pins for stability)
+protobuf==4.25.3
+mediapipe==0.10.14
+controlnet-aux==0.0.7
+
+# Computer vision & image processing
+opencv-python==4.9.0.80
+Pillow==10.2.0
+numpy==1.26.4
+onnxruntime==1.17.1
+
+# HuggingFace & Utilities
+huggingface-hub==0.20.3
+matplotlib==3.8.2
+scipy==1.12.0
+einops==0.7.0
+omegaconf==2.3.0
+safetensors==0.4.2
+filelock==3.13.1
+packaging==23.2
+requests==2.31.0
+# Face Enhancement & Studio Portrait
+facenet-pytorch==2.5.3
+gfpgan==1.3.8
+rembg==2.0.56
+scikit-image==0.22.0
+tqdm==4.66.2
+</file>
+
+<file path="weight_downloader.py">
+"""
+weight_downloader.py
+Downloads all required pre-trained model weights:
+- SAM ViT-H checkpoint (~2.4 GB)
+- MediaPipe Pose Landmarker Heavy model
+- MediaPipe Selfie Multiclass segmentation model
+"""
+
+import os
+import urllib.request
+
+
+SAM_CHECKPOINT = "weights/sam_vit_h_4b8939.pth"
+POSE_LANDMARKER_MODEL = "weights/pose_landmarker_heavy.task"
+MP_MODEL_PATH = "weights/selfie_multiclass_256x256.tflite"
+GFPGAN_MODEL_PATH = "weights/GFPGANv1.4.pth"
+
+
+def download_weights():
+    os.makedirs("weights", exist_ok=True)
+
+    # SAM ViT-H checkpoint (~2.4 GB)
+    if not os.path.exists(SAM_CHECKPOINT):
+        print("Downloading SAM ViT-H weights (~2.4 GB, please wait)...")
+        urllib.request.urlretrieve(
+            "https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth",
+            SAM_CHECKPOINT,
+        )
+        print("SAM weights downloaded.")
+    else:
+        print("✅ SAM weights already present.")
+
+    # MediaPipe Pose Landmarker Heavy
+    if not os.path.exists(POSE_LANDMARKER_MODEL):
+        print("Downloading MediaPipe Pose Landmarker model...")
+        urllib.request.urlretrieve(
+            "https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_heavy/float16/1/pose_landmarker_heavy.task",
+            POSE_LANDMARKER_MODEL,
+        )
+        print("Pose Landmarker model downloaded.")
+    else:
+        print("✅ Pose Landmarker model already present.")
+
+    # MediaPipe Selfie Multiclass segmentation model
+    if not os.path.exists(MP_MODEL_PATH):
+        print("Downloading MediaPipe Selfie Multiclass model...")
+        urllib.request.urlretrieve(
+            "https://storage.googleapis.com/mediapipe-models/image_segmenter/selfie_multiclass_256x256/float32/latest/selfie_multiclass_256x256.tflite",
+            MP_MODEL_PATH,
+        )
+        print("MediaPipe model downloaded.")
+    else:
+        print("✅ MediaPipe Selfie Multiclass model already present.")
+
+    # GFPGAN v1.4 weights
+    if not os.path.exists(GFPGAN_MODEL_PATH):
+        print("Downloading GFPGAN v1.4 weights...")
+        urllib.request.urlretrieve(
+            "https://github.com/TencentARC/GFPGAN/releases/download/v1.3.0/GFPGANv1.4.pth",
+            GFPGAN_MODEL_PATH,
+        )
+        print("GFPGAN weights downloaded.")
+    else:
+        print("✅ GFPGAN weights already present.")
+
+    print("\n✅ All weights ready.")
+
+
+if __name__ == "__main__":
+    download_weights()
+</file>
+
+</files>
