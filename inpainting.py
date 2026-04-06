@@ -34,13 +34,13 @@ from model_loader import DEVICE_DIFF
 
 # ── Prompt Configuration ───────────────────────────────────────────────────────
 POSITIVE_PROMPT = (
-    "(bright neon lime green zip-up hoodie:1.9), "
-    "(vivid solid lime green:1.7), "
-    "(black spray paint graffiti all over the hoodie:1.5), "
-    "black cartoon doodles, smiley face graffiti tags, "
-    "cotton fleece hoodie material, hood visible at top, "
-    "front zipper, kangaroo pocket, "
-    "photorealistic clothing, sharp detail, 8k"
+    "a high-quality (lime green hoodie:1.9), "
+    "vibrant solid color (hex code #5DDF2E:1.8), "
+    "(dense black graffiti and urban street-art pattern:1.7) covering the entire hoodie, "
+    "hand-drawn black (smiley face doodles:1.5), spray paint tags, stylized black text graffiti, "
+    "heavy cotton fleece fabric texture, black drawstrings visible, "
+    "hood visible at the top, "
+    "photorealistic clothing, sharp crisp details, cinematic lighting, 8k"
 )
 
 NEGATIVE_PROMPT = (
@@ -53,10 +53,10 @@ NEGATIVE_PROMPT = (
 
 # ── Diffusion Hyperparameters ──────────────────────────────────────────────────
 DIFFUSION_CONFIG = {
-    "num_inference_steps": 20,    # ← was 50; DPM++ reaches same quality
-    "guidance_scale": 7.5,        # ← was 12.0; 7.5 is optimal for DPM++
+    "num_inference_steps": 25,    # ← bumped 20→25 to handle 768px detail
+    "guidance_scale": 7.5,        # ← optimal for DPM++
     "strength": 0.97,
-    "diffusion_size": 512,        # ← run diffusion at 512, upscale after
+    "diffusion_size": 768,        # ← was 512; 768 gives finer latent grid (96×96 vs 64×64)
 }
 
 # ── Conditioning scales for [OpenPose, Canny] ─────────────────────────────────

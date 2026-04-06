@@ -51,7 +51,7 @@ from skin_segmentation import get_skin_mask
 from clothing_mask    import get_clothing_mask
 from inpainting       import run_inpainting
 from neck_blend       import apply_neck_blend
-from autocrop         import crop_to_hands
+# from autocrop         import crop_to_hands
 from scorecard_processor import ScorecardProcessor
 
 # ── Step 1: Load all models once ──────────────────────────────────────────────
@@ -118,19 +118,23 @@ def precompute_single(image_path: str):
         img_rgb = np.array(img_pil)
         print(f"  [precompute] {fname}: loaded {w}×{h}")
 
-        # Step 2 — Pose landmarks
+        # Step 2 — Remove background and replace with White
+        # This gives the AI a clean slate for hoodie generation
+        bgra = scorecard_proc.remove_background(img_bgr)
+        alpha = bgra[:, :, 3] / 255.0
+        img_bgr = (bgra[:, :, :3] * alpha[:, :, np.newaxis] + (1 - alpha[:, :, np.newaxis]) * 255).astype(np.uint8)
+        img_pil = Image.fromarray(cv2.cvtColor(img_bgr, cv2.COLOR_BGR2RGB))
+        img_rgb = np.array(img_pil)
+
+        # Step 3 — Pose landmarks
         lm_px, _ = extract_pose_landmarks(img_rgb, pose_detector)
         torso_bbox = get_torso_bbox(lm_px, h, w, pad_v=0.08, pad_h=0.18)
 
-        # Step 2b — Horizontal crop to hands
-        img_pil, img_bgr, (h, w) = crop_to_hands(img_pil, img_bgr, lm_px, fname=fname)
-        img_rgb = np.array(img_pil)
+        # Step 4 — Horizontal crop to hands (Commented out)
+        # img_pil, img_bgr, (h, w) = crop_to_hands(img_pil, img_bgr, lm_px, fname=fname)
+        # img_rgb = np.array(img_pil)
 
-        # Step 2c — Face enhancement
-        # bokeh_strength=0 disables rembg (U2Net) background removal which
-        # was adding ~3-5 s per image with no gain on the hoodie result.
-        img_pil = face_enhancer.enhance_full(img_pil, bokeh_strength=0, save_name=fname)
-        img_rgb = np.array(img_pil)
+        # Step 5 — (Face enhancement moved to end of pipeline)
 
         # Step 3 — Skin mask
         skin_mask = get_skin_mask(img_rgb, skin_segmenter)
@@ -207,11 +211,22 @@ def main():
             result.save(out_path)
             print(f"[{i+1}/{len(prepared)}] ✓ Try-on saved → {out_path}")
 
-            # ── Scorecard post-processing ──────────────────────────────────────
+            # ── Step 3: Remove background from generated result ────────────────
+            result_bgr  = cv2.cvtColor(np.array(result), cv2.COLOR_RGB2BGR)
+            transparent = scorecard_proc.remove_background(result_bgr)
+
+            # ── Step 4: Face enhancement (Final Polish) ───────────────────────
+            # Passing the transparent image to enhancer to fix any AI blurring
+            img_pil_final = Image.fromarray(cv2.cvtColor(transparent, cv2.COLOR_BGRA2RGBA))
+            enhanced_pil  = face_enhancer.enhance_full(img_pil_final, save_name=fname)
+            enhanced_bgr  = cv2.cvtColor(np.array(enhanced_pil), cv2.COLOR_RGB2BGR)
+            
+            # Re-apply alpha channel from transparent result to enhanced result
+            final_bgra = np.concatenate([enhanced_bgr, transparent[:, :, 3:4]], axis=2)
+
+            # ── Step 5: Scorecard template overlay ────────────────────────────
             print(f"[{i+1}/{len(prepared)}] Creating scorecard...")
-            result_bgr       = cv2.cvtColor(np.array(result), cv2.COLOR_RGB2BGR)
-            transparent_user = scorecard_proc.remove_background(result_bgr)
-            final_scorecard  = scorecard_proc.overlay_on_template(transparent_user)
+            final_scorecard = scorecard_proc.overlay_on_template(final_bgra)
 
             if final_scorecard is not None:
                 sc_path = os.path.join(SCORECARD_DIR, f"{fname}_scorecard.png")

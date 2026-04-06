@@ -234,7 +234,7 @@ def studio_color_grade(img_bgr: np.ndarray) -> np.ndarray:
     # Lift shadows slightly (fill light) — blacks → 8
     # Roll off highlights gently — whites → 248
     # Midtone contrast boost via sine
-    lift = 8.0
+    lift = 3.0  # ← was 8.0; lower lift preserves natural shadow depth (beard, eye sockets)
     ceil = 248.0
     x_norm = x / 255.0
     # S-curve via smooth sigmoid deviation
@@ -266,9 +266,9 @@ def add_vignette(img_bgr: np.ndarray, strength: float = 0.25) -> np.ndarray:
 #  7. Light denoise (NL-means at very low h)
 # ─────────────────────────────────────────────────────────────────
 def light_denoise(img_bgr: np.ndarray) -> np.ndarray:
-    # h=2 is barely perceptible — just removes sensor noise without softening
+    # h=1 — minimal noise removal; preserves fine beard/hair strands and pore detail
     return cv2.fastNlMeansDenoisingColored(
-        img_bgr, None, h=2, hColor=2, templateWindowSize=7, searchWindowSize=21
+        img_bgr, None, h=1, hColor=1, templateWindowSize=7, searchWindowSize=21
     )
 
 
@@ -363,20 +363,25 @@ class FaceEnhancer:
             face_mask = cv2.GaussianBlur(face_mask, (ksize, ksize), ksize * 0.3)
 
         # ── Step 3: Frequency-separation skin smooth (face region only) ──
-        img_smooth = freq_sep_smooth(img_bgr, radius=8, strength=0.52)
+        img_smooth = freq_sep_smooth(img_bgr, radius=8, strength=0.28)  # ← was 0.52; lower = more natural texture/beard detail preserved
         # Blend smooth only where face mask is active
         m3 = face_mask[:, :, np.newaxis]
         img_bgr = _u8(_f32(img_bgr) * (1 - m3) + _f32(img_smooth) * m3)
 
         # ── Step 4: CLAHE global contrast ────────────────────────────────
-        img_bgr = apply_clahe(img_bgr, clip=1.4)
+        img_bgr = apply_clahe(img_bgr, clip=1.2)  # ← was 1.4; reduced to avoid contrast flattening
 
         # ── Step 5: Studio face glow ──────────────────────────────────────
-        img_bgr = studio_face_glow(img_bgr, face_mask, glow_strength=0.26, warmth=0.035)
+        img_bgr = studio_face_glow(img_bgr, face_mask, glow_strength=0.10, warmth=0.02)  # ← was 0.26/0.035; reduced to preserve shadow depth
 
         # ── Step 6: Micro-sharpen on face (crisp features) ───────────────
-        img_sharp = micro_sharpen(img_bgr, amount=0.28, radius=0.6)
+        # Pass 1 — tight-radius USM for fine edge crispness (eyes, brow hairs, beard)
+        img_sharp = micro_sharpen(img_bgr, amount=0.85, radius=0.5)  # ← raised from 0.55; smaller radius = only lifts thin edges
         img_bgr = _u8(_f32(img_bgr) * (1 - m3) + _f32(img_sharp) * m3)
+
+        # Pass 2 — medium-radius USM for facial structure (nose bridge, lip contour, jaw)
+        img_sharp2 = micro_sharpen(img_bgr, amount=0.40, radius=1.2)
+        img_bgr = _u8(_f32(img_bgr) * (1 - m3 * 0.6) + _f32(img_sharp2) * m3 * 0.6)
 
         # ── Step 7 (optional): Very light GFPGAN ─────────────────────────
         if face_restore_strength > 0:
