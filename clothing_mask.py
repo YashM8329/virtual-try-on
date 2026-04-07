@@ -8,6 +8,12 @@ IDM-VTON style mask: a wide rectangle covering the torso area.
 - Left/Right: nearly full image width
 - Rounded top corners (cosmetic, matches IDM-VTON shape)
 - Gaussian soft-edge blur for smooth boundary blending
+
+v2 addition — Collar Extension:
+- Adds a neck-hugging band above the original torso rectangle
+- Covers the shoulder-to-collar transition area on both sides of the neck
+- Punches out an elliptical hole around the neck itself so neck skin is preserved
+- Person-adaptive: neck width derived from shoulder landmark distance
 """
 
 import cv2
@@ -99,6 +105,52 @@ def get_clothing_mask(
         -1,
     )
     refined_mask = cv2.subtract(refined_mask, corner_mask2)
+
+    # ── NEW: Collar extension — neck-hugging band above the torso rectangle ───
+    # Adds coverage for the shirt collar area on both sides of the neck while
+    # preserving the neck skin. Fully additive — original logic above untouched.
+
+    # Shoulder landmarks: X for neck center, Y for shoulder line
+    l_shoulder_x = lm_px.get(11, (w // 3,     int(h * 0.40)))[0]
+    r_shoulder_x = lm_px.get(12, (2 * w // 3, int(h * 0.40)))[0]
+    neck_center_x = (l_shoulder_x + r_shoulder_x) // 2
+    shoulder_span = abs(r_shoulder_x - l_shoulder_x)
+
+    # Neck half-width: ~24% of shoulder span, person-adaptive, min 40px
+    neck_half_w = max(40, int(shoulder_span * 0.24))
+
+    # Collar band height: fixed at 8% of image height so it's always visible
+    # regardless of how close the chin is to the shoulders in the photo
+    collar_band_height = max(int(h * 0.08), 40)
+    collar_top_y = max(0, top_y - collar_band_height)
+
+    # Step 1 — full-width rectangle covering the collar zone
+    collar_ext = np.zeros((h, w), dtype=np.uint8)
+    collar_ext[collar_top_y:top_y, left_x:right_x] = 255
+
+    # Step 2 — ellipse cutout to preserve the neck
+    #   The ellipse is centered at top_y (the seam between collar band and
+    #   existing torso mask) so the bottom half of the ellipse cuts into the
+    #   collar band while the top half cuts into nothing — giving a clean
+    #   U-shaped notch whose depth == ellipse vertical radius.
+    #   Vertical radius = collar_band_height * 0.85 so the notch nearly fills
+    #   the band height, leaving only the sides masked.
+    ellipse_center = (neck_center_x, top_y)
+    ellipse_axes   = (neck_half_w, int(collar_band_height * 0.85))
+    cv2.ellipse(
+        collar_ext,
+        ellipse_center,
+        ellipse_axes,
+        angle=0,
+        startAngle=180,    # upper half of ellipse → U-notch opening upward
+        endAngle=360,
+        color=0,
+        thickness=-1,
+    )
+
+    # Step 3 — union into the existing mask (purely additive)
+    refined_mask = cv2.bitwise_or(refined_mask, collar_ext)
+    # ── End collar extension ───────────────────────────────────────────────────
 
     # ── Gaussian soft edge ─────────────────────────────────────────────────────
     br = blur_radius if blur_radius % 2 == 1 else blur_radius + 1

@@ -34,13 +34,11 @@ from model_loader import DEVICE_DIFF
 
 # ── Prompt Configuration ───────────────────────────────────────────────────────
 POSITIVE_PROMPT = (
-    "a high-quality (lime green hoodie:1.9), "
-    "vibrant solid color (hex code #5DDF2E:1.8), "
-    "(dense black graffiti and urban street-art pattern:1.7) covering the entire hoodie, "
-    "hand-drawn black (smiley face doodles:1.5), spray paint tags, stylized black text graffiti, "
-    "heavy cotton fleece fabric texture, black drawstrings visible, "
-    "hood visible at the top, "
-    "photorealistic clothing, sharp crisp details, cinematic lighting, 8k"
+    "(neon lime green #5DDF2E hoodie:1.9), "
+    "(dense black rectangle-shaped doodles and graffiti motifs:1.7), "
+    "(hand-drawn black ink street-art sketches:1.5), "
+    "cotton fleece, black drawstrings, kangaroo pocket, "
+    "photorealistic, sharp fabric texture, 8k, cinematic lighting"
 )
 
 NEGATIVE_PROMPT = (
