@@ -106,51 +106,52 @@ def get_clothing_mask(
     )
     refined_mask = cv2.subtract(refined_mask, corner_mask2)
 
-    # ── NEW: Collar extension — neck-hugging band above the torso rectangle ───
-    # Adds coverage for the shirt collar area on both sides of the neck while
-    # preserving the neck skin. Fully additive — original logic above untouched.
+    # ── NEW: Neck/collar trapezoid mask ───────────────────────────────────────
+    # Shape matches reference: wide at shoulder base, tapers to neck width
+    # at chin level. Fully additive — torso mask logic above untouched.
 
-    # Shoulder landmarks: X for neck center, Y for shoulder line
+    # Shoulder positions (base of trapezoid)
     l_shoulder_x = lm_px.get(11, (w // 3,     int(h * 0.40)))[0]
     r_shoulder_x = lm_px.get(12, (2 * w // 3, int(h * 0.40)))[0]
+    l_shoulder_y = lm_px.get(11, (w // 3,     int(h * 0.40)))[1]
+    r_shoulder_y = lm_px.get(12, (2 * w // 3, int(h * 0.40)))[1]
     neck_center_x = (l_shoulder_x + r_shoulder_x) // 2
     shoulder_span = abs(r_shoulder_x - l_shoulder_x)
 
-    # Neck half-width: ~24% of shoulder span, person-adaptive, min 40px
-    neck_half_w = max(40, int(shoulder_span * 0.24))
+    # Trapezoid bottom edge: at actual shoulder Y level
+    trap_bottom_y = int((l_shoulder_y + r_shoulder_y) / 2)
 
-    # Collar band height: fixed at 8% of image height so it's always visible
-    # regardless of how close the chin is to the shoulders in the photo
-    collar_band_height = max(int(h * 0.08), 40)
-    collar_top_y = max(0, top_y - collar_band_height)
+    # Trapezoid top edge: Higher than chin_y to capture collar/neck area
+    # Move from 0.60 (chin) to 0.30 (lower face/higher neck)
+    trap_top_y = int(nose_y + (shoulder_y - nose_y) * 0.30)
+    trap_top_y = max(0, trap_top_y)
 
-    # Step 1 — full-width rectangle covering the collar zone
-    collar_ext = np.zeros((h, w), dtype=np.uint8)
-    collar_ext[collar_top_y:top_y, left_x:right_x] = 255
+    # Bottom width: shoulder span (full collar base)
+    bottom_half_w = max(60, int(shoulder_span * 0.52))
 
-    # Step 2 — ellipse cutout to preserve the neck
-    #   The ellipse is centered at top_y (the seam between collar band and
-    #   existing torso mask) so the bottom half of the ellipse cuts into the
-    #   collar band while the top half cuts into nothing — giving a clean
-    #   U-shaped notch whose depth == ellipse vertical radius.
-    #   Vertical radius = collar_band_height * 0.85 so the notch nearly fills
-    #   the band height, leaving only the sides masked.
-    ellipse_center = (neck_center_x, top_y)
-    ellipse_axes   = (neck_half_w, int(collar_band_height * 0.85))
-    cv2.ellipse(
-        collar_ext,
-        ellipse_center,
-        ellipse_axes,
-        angle=0,
-        startAngle=180,    # upper half of ellipse → U-notch opening upward
-        endAngle=360,
-        color=0,
-        thickness=-1,
-    )
+    # Top width: neck width only (~26% of shoulder span), person-adaptive
+    top_half_w = max(35, int(shoulder_span * 0.28))
 
-    # Step 3 — union into the existing mask (purely additive)
-    refined_mask = cv2.bitwise_or(refined_mask, collar_ext)
-    # ── End collar extension ───────────────────────────────────────────────────
+    # Build trapezoid as a filled polygon
+    trap_pts = np.array([
+        [neck_center_x - bottom_half_w, trap_bottom_y],  # bottom-left
+        [neck_center_x + bottom_half_w, trap_bottom_y],  # bottom-right
+        [neck_center_x + top_half_w,    trap_top_y],     # top-right
+        [neck_center_x - top_half_w,    trap_top_y],     # top-left
+    ], dtype=np.int32)
+
+    neck_trap = np.zeros((h, w), dtype=np.uint8)
+    cv2.fillPoly(neck_trap, [trap_pts], 255)
+
+    # Union into existing mask
+    refined_mask = cv2.bitwise_or(refined_mask, neck_trap)
+
+    # ── Skin Protection: Punch out all skin pixels ───────────────────────────
+    # This ensures neck, chin, and mouth skin are preserved and not masked.
+    if skin_mask is not None:
+        refined_mask = cv2.bitwise_and(refined_mask, cv2.bitwise_not(skin_mask))
+    
+    # ── End neck/collar logic ──────────────────────────────────────────────────
 
     # ── Gaussian soft edge ─────────────────────────────────────────────────────
     br = blur_radius if blur_radius % 2 == 1 else blur_radius + 1
