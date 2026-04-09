@@ -132,6 +132,14 @@ def load_diffusion_pipeline():
         safety_checker=None,
     )
 
+    # pipe = StableDiffusionControlNetInpaintPipeline.from_single_file(
+    #     "weights/inpaintingByZenityxAI_v10.safetensors",
+    #     controlnet=MultiControlNetModel([pose_controlnet, canny_controlnet]),
+    #     torch_dtype=torch.float16,
+    #     use_safetensors=True,
+    #     num_in_channels=9,
+    # )
+
     # ── Scheduler: DPM++ 2M Karras — 20 steps replaces 50 UniPC steps ─────────
     pipe.scheduler = DPMSolverMultistepScheduler.from_config(
         pipe.scheduler.config,

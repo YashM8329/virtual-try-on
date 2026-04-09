@@ -51,7 +51,7 @@ NEGATIVE_PROMPT = (
 
 # ── Diffusion Hyperparameters ──────────────────────────────────────────────────
 DIFFUSION_CONFIG = {
-    "num_inference_steps": 25,    # ← bumped 20→25 to handle 768px detail
+    "num_inference_steps": 15,    # ← bumped 20→25 to handle 768px detail
     "guidance_scale": 7.5,        # ← optimal for DPM++
     "strength": 0.97,
     "diffusion_size": 768,        # ← was 512; 768 gives finer latent grid (96×96 vs 64×64)
