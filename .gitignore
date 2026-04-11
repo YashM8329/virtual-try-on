@@ -1,2 +1,8 @@
 .venv/
 weights/
+masks/
+output/
+scorecard/
+template/
+input/
+enhanced/
