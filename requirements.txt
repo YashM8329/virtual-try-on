@@ -29,9 +29,9 @@ safetensors==0.4.2
 filelock==3.13.1
 packaging==23.2
 requests==2.31.0
-# Face Enhancement & Studio Portrait
-facenet-pytorch==2.5.3
-gfpgan==1.3.8
-rembg==2.0.56
+# Face Enhancement & Studio Portrait (Optional, skipped in optimized pipeline)
+# facenet-pytorch==2.5.3
+# gfpgan==1.3.8
+# rembg==2.0.56
 scikit-image==0.22.0
 tqdm==4.66.2

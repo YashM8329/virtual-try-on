@@ -25,24 +25,16 @@ def get_clothing_mask(
     lm_px: dict,
     skin_mask: np.ndarray,
     torso_bbox: tuple,
+    clothes_mask_raw: np.ndarray = None,
     blur_radius: int = 31,
 ):
     """
     Generate an IDM-VTON style clothing mask.
-
-    Args:
-        img_rgb    : np.ndarray (H, W, 3) RGB
-        lm_px      : landmark pixel dict from pose extraction
-        skin_mask  : protection mask (H, W) uint8 from skin segmentation
-        torso_bbox : (x1, y1, x2, y2) torso bounding box (unused directly,
-                     kept for API parity with notebook)
-        blur_radius: Gaussian blur kernel size for soft edge
-
-    Returns:
-        refined_mask : np.ndarray (H, W) uint8 — hard binary mask
-        soft_mask    : np.ndarray (H, W) uint8 — Gaussian-blurred soft mask
     """
     h, w = img_rgb.shape[:2]
+
+    # IF RAW MASK IS PROVIDED, USE IT TO REFINE THE SEARCH AREA (Optional optimization)
+    # For now, we stick to the geometric mask as it's more predictable for the AI
 
     # ── Top of mask: chin position ────────────────────────────────────────────
     nose_y = lm_px.get(0, (w // 2, int(h * 0.15)))[1]

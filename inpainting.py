@@ -51,10 +51,10 @@ NEGATIVE_PROMPT = (
 
 # ── Diffusion Hyperparameters ──────────────────────────────────────────────────
 DIFFUSION_CONFIG = {
-    "num_inference_steps": 15,    # ← bumped 20→25 to handle 768px detail
-    "guidance_scale": 7.5,        # ← optimal for DPM++
-    "strength": 0.97,
-    "diffusion_size": 768,        # ← was 512; 768 gives finer latent grid (96×96 vs 64×64)
+    "num_inference_steps": 20,     # ← Increased for high quality
+    "guidance_scale": 8.0,        # ← higher CFG for better prompt adherence
+    "strength": 0.99,             # ← ensures garment fully replaces area
+    "diffusion_size": 768,        # ← 768px fixes blurriness
 }
 
 # ── Conditioning scales for [OpenPose, Canny] ─────────────────────────────────
@@ -73,37 +73,21 @@ def run_inpainting(
     config: dict = None,
     openpose_gen=None,
     image_path: str = "",
+    garment_image_pil: Image.Image = None,
 ) -> Image.Image:
     """
-    Run MultiControlNet (OpenPose + Canny) inpainting on a single image.
-
-    Pipeline
-    ────────
-    1. Downscale image + mask to diffusion_size (512 px longest edge).
-    2. Generate OpenPose skeleton image and Canny edge map at 512 px.
-    3. Run SD inpainting with 20 DPM++ steps.
-    4. Upscale result back to original resolution.
-    5. Alpha-blend with original using the original-resolution soft mask.
-
-    Args:
-        img_pil      : PIL Image (RGB) — already cropped + enhanced
-        soft_mask    : np.ndarray (H, W) uint8 — Gaussian-blurred clothing mask
-        pipe         : loaded StableDiffusionControlNetInpaintPipeline
-        config       : override dict (defaults to DIFFUSION_CONFIG)
-        openpose_gen : OpenposeDetector instance (from controlnet-aux)
-        image_path   : original file path used to derive a per-image seed
-
-    Returns:
-        PIL Image — garment composited onto original at original resolution
+    Run MultiControlNet (OpenPose + Canny) inpainting with IP-Adapter (image reference).
     """
-    if config is None:
-        config = DIFFUSION_CONFIG
+    # Merge provided config with defaults
+    full_config = DIFFUSION_CONFIG.copy()
+    if config:
+        full_config.update(config)
 
-    orig_size = img_pil.size          # (W, H) — save for final upscale
+    orig_size = img_pil.size
     orig_h, orig_w = orig_size[1], orig_size[0]
 
     # ── 1. Downscale to diffusion_size for faster UNet passes ─────────────────
-    diff_size = config.get("diffusion_size", 512)
+    diff_size = full_config.get("diffusion_size", 768) # Default to 768 for higher quality
     scale     = diff_size / max(orig_h, orig_w)
     diff_w    = int(round(orig_w * scale / 8)) * 8
     diff_h    = int(round(orig_h * scale / 8)) * 8
@@ -113,32 +97,29 @@ def run_inpainting(
         (diff_w, diff_h), Image.LANCZOS
     )
 
-    # ── 2. Control images at diffusion resolution ──────────────────────────────
+    # ── 2. Control images ──────────────────────────────────────────────────────
     canny_image = make_canny_control_image(img_small, low=80, high=180)
-
     if openpose_gen is not None:
         pose_image = openpose_gen(img_small)
     else:
-        # Fallback: reuse Canny when OpenPose is unavailable
         pose_image = canny_image
-
     control_images = [pose_image, canny_image]
 
-    # ── 3. Per-image deterministic seed ───────────────────────────────────────
+    # ── 3. Per-image seed ─────────────────────────────────────────────────────
     seed      = _make_seed(image_path) if image_path else 42
-    # NOTE: use "cpu" for the generator when enable_model_cpu_offload is active
     generator = torch.Generator(device="cpu").manual_seed(seed)
 
-    # ── 4. Diffusion at 512 px ─────────────────────────────────────────────────
+    # ── 4. Diffusion with IP-Adapter ──────────────────────────────────────────
     result_small = pipe(
         prompt=POSITIVE_PROMPT,
         negative_prompt=NEGATIVE_PROMPT,
         image=img_small,
         mask_image=mask_small,
         control_image=control_images,
-        num_inference_steps=config["num_inference_steps"],
-        guidance_scale=config["guidance_scale"],
-        strength=config["strength"],
+        ip_adapter_image=garment_image_pil, # Use garment image for reference
+        num_inference_steps=full_config["num_inference_steps"],
+        guidance_scale=full_config["guidance_scale"],
+        strength=full_config["strength"],
         controlnet_conditioning_scale=CONTROLNET_SCALES,
         generator=generator,
         height=diff_h,

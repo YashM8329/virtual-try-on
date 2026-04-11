@@ -294,113 +294,83 @@ class FaceEnhancer:
     def __init__(self, device: str = "cpu", model_path: str = "weights/GFPGANv1.4.pth"):
         self.device = device
         self.model_path = model_path
-        self._mtcnn = None
         self._gfpgan = None
-
-    # ── lazy GFPGAN (only if weights present) ────────────────────────────────
-    def _get_gfpgan(self):
-        if self._gfpgan is None and GFPGANer is not None:
-            if os.path.exists(self.model_path):
-                self._gfpgan = GFPGANer(
-                    model_path=self.model_path,
-                    upscale=1,
-                    arch="clean",
-                    channel_multiplier=2,
-                    bg_upsampler=None,
-                    device=self.device,
-                )
-        return self._gfpgan
-
-    # ── optional very-light GFPGAN pass ──────────────────────────────────────
-    def _apply_gfpgan_light(self, img_bgr: np.ndarray, strength: float = 0.20) -> np.ndarray:
-        """Run GFPGAN at ≤0.25 blend — just to recover compression artefacts."""
-        gfpgan = self._get_gfpgan()
-        if gfpgan is None:
-            return img_bgr
-        try:
-            _, _, restored = gfpgan.enhance(
-                img_bgr, has_aligned=False, only_center_face=False, paste_back=True
-            )
-            return _u8(_f32(img_bgr) * (1 - strength) + _f32(restored) * strength)
-        except Exception as e:
-            print(f"[FaceEnhancer] GFPGAN skipped: {e}")
-            return img_bgr
+        # Cache MTCNN once to avoid reload per image
+        if MTCNN is not None:
+            self._mtcnn = MTCNN(keep_all=True, device=self.device)
+            print("[FaceEnhancer] MTCNN cached.")
+        else:
+            self._mtcnn = None
 
     # ── main entry point ──────────────────────────────────────────────────────
     def enhance_full(
         self,
         pil_img: Image.Image,
-        # Legacy kwarg kept for back-compat — ignored
         bokeh_strength: float = 0,
-        face_restore_strength: float = 0.20,   # was 0.6 — now much lighter
+        face_restore_strength: float = 0.0,   # Set to 0.0 by default to save time
         save_name: str = None,
         save_dir: str = "enhanced",
+        user_landmarks: dict = None,
     ) -> Image.Image:
-        """
-        Full studio-quality enhancement pipeline.
-
-        face_restore_strength  ← kept at 0.20 max to avoid GFPGAN blurring.
-                                  If GFPGAN weights are missing the step is
-                                  skipped gracefully.
-        """
         img_bgr = _bgr(pil_img)
-
-        # ── Step 1: Light denoise ─────────────────────────────────────────
-        img_bgr = light_denoise(img_bgr)
+        # Faster alternative to light_denoise
+        img_bgr = cv2.bilateralFilter(img_bgr, d=5, sigmaColor=15, sigmaSpace=15)
 
         # ── Step 2: Detect faces + build soft mask ────────────────────────
-        boxes = detect_faces(pil_img)
         h, w = img_bgr.shape[:2]
+        boxes = []
+        
+        # USE MEDIA PIPE LANDMARKS IF PROVIDED (Saves ~1-2s)
+        if user_landmarks:
+            # Face landmarks: 0 (nose), 1-6 (eyes), 7-10 (ears)
+            # We can use eye landmarks 1, 4 and nose 0 to get a box
+            try:
+                nose = user_landmarks.get(0)
+                l_eye = user_landmarks.get(1)
+                r_eye = user_landmarks.get(4)
+                if nose and l_eye and r_eye:
+                    eye_dist = abs(r_eye[0] - l_eye[0])
+                    x1 = max(0, int(min(l_eye[0], r_eye[0]) - eye_dist * 0.8))
+                    x2 = min(w, int(max(l_eye[0], r_eye[0]) + eye_dist * 0.8))
+                    y1 = max(0, int(min(l_eye[1], r_eye[1]) - eye_dist * 1.2))
+                    y2 = min(h, int(nose[1] + eye_dist * 1.2))
+                    boxes = [(x1, y1, x2, y2)]
+            except: pass
+
+        if not boxes and self._mtcnn:
+            try:
+                detected, _ = self._mtcnn.detect(pil_img)
+                if detected is not None:
+                    boxes = [tuple(int(max(0, v)) for v in b) for b in detected]
+            except: pass
+            
         if boxes:
             face_mask = make_face_mask((h, w), boxes, pad_ratio=0.30, feather=0.14)
         else:
-            # Fallback: assume central 60% of image is face
             face_mask = np.zeros((h, w), dtype=np.float32)
-            y0, y1 = int(h * 0.1), int(h * 0.9)
-            x0, x1 = int(w * 0.15), int(w * 0.85)
-            face_mask[y0:y1, x0:x1] = 1.0
-            ksize = (h // 6) | 1
-            face_mask = cv2.GaussianBlur(face_mask, (ksize, ksize), ksize * 0.3)
+            face_mask[int(h*0.1):int(h*0.9), int(w*0.15):int(w*0.85)] = 1.0
+            k = (h // 6) | 1
+            face_mask = cv2.GaussianBlur(face_mask, (k, k), k * 0.3)
 
-        # ── Step 3: Frequency-separation skin smooth (face region only) ──
-        img_smooth = freq_sep_smooth(img_bgr, radius=8, strength=0.28)  # ← was 0.52; lower = more natural texture/beard detail preserved
-        # Blend smooth only where face mask is active
         m3 = face_mask[:, :, np.newaxis]
+        img_smooth = freq_sep_smooth(img_bgr, radius=8, strength=0.28)
         img_bgr = _u8(_f32(img_bgr) * (1 - m3) + _f32(img_smooth) * m3)
-
-        # ── Step 4: CLAHE global contrast ────────────────────────────────
-        img_bgr = apply_clahe(img_bgr, clip=1.2)  # ← was 1.4; reduced to avoid contrast flattening
-
-        # ── Step 5: Studio face glow ──────────────────────────────────────
-        img_bgr = studio_face_glow(img_bgr, face_mask, glow_strength=0.10, warmth=0.02)  # ← was 0.26/0.035; reduced to preserve shadow depth
-
-        # ── Step 6: Micro-sharpen on face (crisp features) ───────────────
-        # Pass 1 — tight-radius USM for fine edge crispness (eyes, brow hairs, beard)
-        img_sharp = micro_sharpen(img_bgr, amount=0.85, radius=0.5)  # ← raised from 0.55; smaller radius = only lifts thin edges
+        img_bgr = apply_clahe(img_bgr, clip=1.2)
+        img_bgr = studio_face_glow(img_bgr, face_mask, glow_strength=0.10, warmth=0.02)
+        img_sharp = micro_sharpen(img_bgr, amount=0.85, radius=0.5)
         img_bgr = _u8(_f32(img_bgr) * (1 - m3) + _f32(img_sharp) * m3)
 
-        # Pass 2 — medium-radius USM for facial structure (nose bridge, lip contour, jaw)
-        img_sharp2 = micro_sharpen(img_bgr, amount=0.40, radius=1.2)
-        img_bgr = _u8(_f32(img_bgr) * (1 - m3 * 0.6) + _f32(img_sharp2) * m3 * 0.6)
-
-        # ── Step 7 (optional): Very light GFPGAN ─────────────────────────
+        # Skip GFPGAN for speed (as per request)
         if face_restore_strength > 0:
             img_bgr = self._apply_gfpgan_light(img_bgr, strength=min(face_restore_strength, 0.25))
 
-        # ── Step 8: Studio colour grade ───────────────────────────────────
         img_bgr = studio_color_grade(img_bgr)
-
-        # ── Step 9: Subtle vignette ───────────────────────────────────────
         img_bgr = add_vignette(img_bgr, strength=0.20)
-
         final_pil = _pil(img_bgr)
 
         if save_name:
             os.makedirs(save_dir, exist_ok=True)
-            save_path = os.path.join(save_dir, f"{save_name}_enhanced.png")
-            final_pil.save(save_path)
-            print(f"[FaceEnhancer] Saved → {save_path}")
-
+            final_pil.save(os.path.join(save_dir, f"{save_name}_enhanced.png"))
         return final_pil
 
 
