@@ -83,6 +83,16 @@ def load_diffusion_pipeline():
 
     # ── IP-Adapter: Reference-based conditioning ──────────────────────────────
     try:
+        from transformers import CLIPVisionModelWithProjection
+        
+        # Load the image encoder separately to avoid subfolder path issues on Windows
+        # IP-Adapter for SD 1.5 in h94/IP-Adapter expects ViT-H-14 (1024)
+        image_encoder = CLIPVisionModelWithProjection.from_pretrained(
+            "laion/CLIP-ViT-H-14-laion2B-s32B-b79K",
+            torch_dtype=torch.float16,
+        ).to(DEVICE_DIFF)
+        
+        pipe.image_encoder = image_encoder
         pipe.load_ip_adapter(
             "h94/IP-Adapter", 
             subfolder="models", 

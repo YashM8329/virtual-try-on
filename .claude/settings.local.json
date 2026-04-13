@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls C:\\\\Users\\\\yashm\\\\Desktop\\\\ftb-scorecard/*.py)",
+      "Bash(python -c \"import gfpgan; print\\('gfpgan available'\\)\")",
+      "Bash(python -c \"import basicsr; print\\('basicsr available'\\)\")",
+      "Bash(python -c \"import facexlib; print\\('facexlib available'\\)\")",
+      "Bash(python -c \"import cv2; print\\(cv2.__version__\\)\")",
+      "Bash(python -c \"import torch; print\\(torch.__version__, torch.cuda.is_available\\(\\)\\)\")",
+      "Bash(pip show:*)",
+      "Bash(pip list:*)"
+    ]
+  }
+}

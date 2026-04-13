@@ -62,15 +62,3 @@ class UnifiedPreprocessor:
 
         return lm_px, protection_mask, clothing_mask_raw
 
-def get_torso_bbox(lm_px, h, w, pad_v=0.15, pad_h=0.18):
-    """Re-used from pose_extraction.py for compatibility."""
-    torso_indices = [11, 12, 13, 14, 23, 24]
-    xs = [lm_px[i][0] for i in torso_indices if i in lm_px]
-    ys = [lm_px[i][1] for i in torso_indices if i in lm_px]
-    if not xs or not ys:
-        return 0, 0, w, h
-    x1 = max(0, int(min(xs) - pad_h * w))
-    y1 = max(0, int(min(ys) - pad_v * h))
-    x2 = min(w, int(max(xs) + pad_h * w))
-    y2 = min(h, int(max(ys) + pad_v * h))
-    return x1, y1, x2, y2

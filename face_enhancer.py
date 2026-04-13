@@ -25,11 +25,6 @@ try:
 except ImportError:
     MTCNN = None
 
-try:
-    from gfpgan import GFPGANer
-except ImportError:
-    GFPGANer = None
-
 
 # ═════════════════════════════════════════════════════════════════════════════
 #  Utility helpers
@@ -54,36 +49,6 @@ def _u8(img: np.ndarray) -> np.ndarray:
 # ═════════════════════════════════════════════════════════════════════════════
 #  Core processing blocks
 # ═════════════════════════════════════════════════════════════════════════════
-
-def detect_faces(pil_img: Image.Image):
-    """Return list of (x1,y1,x2,y2) face boxes using MTCNN or OpenCV fallback."""
-    boxes = []
-
-    # --- MTCNN (better) ---
-    if MTCNN is not None:
-        try:
-            mtcnn = MTCNN(keep_all=True, device="cpu")
-            detected, _ = mtcnn.detect(pil_img)
-            if detected is not None:
-                for b in detected:
-                    boxes.append(tuple(int(max(0, v)) for v in b))
-                return boxes
-        except Exception:
-            pass
-
-    # --- OpenCV DNN face detector fallback ---
-    img_bgr = _bgr(pil_img)
-    h, w = img_bgr.shape[:2]
-    # Use Haar cascade as last resort
-    cascade_path = cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
-    cascade = cv2.CascadeClassifier(cascade_path)
-    gray = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2GRAY)
-    faces = cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(60, 60))
-    if len(faces):
-        for (x, y, fw, fh) in faces:
-            boxes.append((x, y, x + fw, y + fh))
-
-    return boxes
 
 
 def make_face_mask(shape, boxes, pad_ratio=0.35, feather=0.12):
@@ -262,15 +227,6 @@ def add_vignette(img_bgr: np.ndarray, strength: float = 0.25) -> np.ndarray:
     return _u8(_f32(img_bgr) * vignette)
 
 
-# ─────────────────────────────────────────────────────────────────
-#  7. Light denoise (NL-means at very low h)
-# ─────────────────────────────────────────────────────────────────
-def light_denoise(img_bgr: np.ndarray) -> np.ndarray:
-    # h=1 — minimal noise removal; preserves fine beard/hair strands and pore detail
-    return cv2.fastNlMeansDenoisingColored(
-        img_bgr, None, h=1, hColor=1, templateWindowSize=7, searchWindowSize=21
-    )
-
 
 # ═════════════════════════════════════════════════════════════════════════════
 #  Main class — drop-in replacement for the old FaceEnhancer
@@ -291,10 +247,8 @@ class FaceEnhancer:
       [Optional] GFPGAN at very low blend (≤0.25) if weights available
     """
 
-    def __init__(self, device: str = "cpu", model_path: str = "weights/GFPGANv1.4.pth"):
+    def __init__(self, device: str = "cpu"):
         self.device = device
-        self.model_path = model_path
-        self._gfpgan = None
         # Cache MTCNN once to avoid reload per image
         if MTCNN is not None:
             self._mtcnn = MTCNN(keep_all=True, device=self.device)
@@ -306,8 +260,6 @@ class FaceEnhancer:
     def enhance_full(
         self,
         pil_img: Image.Image,
-        bokeh_strength: float = 0,
-        face_restore_strength: float = 0.0,   # Set to 0.0 by default to save time
         save_name: str = None,
         save_dir: str = "enhanced",
         user_landmarks: dict = None,
@@ -359,11 +311,6 @@ class FaceEnhancer:
         img_bgr = studio_face_glow(img_bgr, face_mask, glow_strength=0.10, warmth=0.02)
         img_sharp = micro_sharpen(img_bgr, amount=0.85, radius=0.5)
         img_bgr = _u8(_f32(img_bgr) * (1 - m3) + _f32(img_sharp) * m3)
-
-        # Skip GFPGAN for speed (as per request)
-        if face_restore_strength > 0:
-            img_bgr = self._apply_gfpgan_light(img_bgr, strength=min(face_restore_strength, 0.25))
-
         img_bgr = studio_color_grade(img_bgr)
         img_bgr = add_vignette(img_bgr, strength=0.20)
         final_pil = _pil(img_bgr)

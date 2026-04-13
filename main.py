@@ -32,8 +32,8 @@ download_weights()
 
 # ── Import pipeline helpers ────────────────────────────────────────────────────
 from face_enhancer    import FaceEnhancer
-from image_utils      import preprocess_image, save_images
-from unified_preprocessor import UnifiedPreprocessor, get_torso_bbox
+from image_utils      import preprocess_image
+from unified_preprocessor import UnifiedPreprocessor
 from clothing_mask    import get_clothing_mask
 from inpainting       import run_inpainting
 from neck_blend       import apply_neck_blend
@@ -75,10 +75,11 @@ def main():
 
     success_count = 0
     # Higher quality: 20 steps, 768px resolution (fixes blurriness)
-    config = {"num_inference_steps": 20, "diffusion_size": 768, "guidance_scale": 8.0} 
+    config = {"num_inference_steps": 20, "diffusion_size": 1024, "guidance_scale": 10.0} 
 
     # Load Reference Garment (IP-Adapter)
-    garment_path = "garment.jpg" # Place your hoodie image here
+    garment_path = "garment.png"
+
     garment_pil = None
     if os.path.exists(garment_path):
         garment_pil = Image.open(garment_path).convert("RGB")
@@ -98,7 +99,6 @@ def main():
             
             # Run Pose + Skin + Clothes Segmenter in ONE pass (Saves ~10s)
             lm_px, skin_mask, clothes_mask_raw = preprocessor.process(img_rgb)
-            torso_bbox = get_torso_bbox(lm_px, h, w)
 
             # BG Removal - Cache the BGRA result (Saves ~15s later)
             bgra_original = scorecard_proc.remove_background(img_bgr)
@@ -107,7 +107,7 @@ def main():
             img_pil_white = Image.fromarray(cv2.cvtColor(img_bgr_white, cv2.COLOR_BGR2RGB))
 
             # Masking logic
-            refined_mask, soft_mask = get_clothing_mask(img_rgb, lm_px, skin_mask, torso_bbox, clothes_mask_raw=clothes_mask_raw)
+            refined_mask, soft_mask = get_clothing_mask(img_rgb, lm_px, skin_mask)
             soft_mask = apply_neck_blend(soft_mask, skin_mask)
 
             # 2. Diffusion (Inpainting with optional Reference Image)
