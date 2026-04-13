@@ -4,7 +4,7 @@ This file provides comprehensive guidance for developers and AI agents working o
 
 ## Project Overview (Agent Perspective)
 - **Goal**: High-speed (< 30s/image) virtual try-on system that replaces a person's top with a specific neon lime green hoodie and generates a branded scorecard.
-- **Core Architecture**: Modular pipeline combining MediaPipe (Pose/Segmentation), MODNet (Matting), Stable Diffusion 1.5 (Inpainting via ControlNet + IP-Adapter), and Classical CV (Face Enhancement).
+- **Core Architecture**: Modular pipeline combining MediaPipe (Pose/Segmentation), MODNet (Matting), Stable Diffusion 1.5 (Inpainting via ControlNet + IP-Adapter), and CodeFormer (Face Restoration) + Classical CV (Studio Polish).
 - **Performance Target**: Optimized for 6GB VRAM (RTX 3050) using FP16, static GPU loading, and DPM++ scheduling.
 - **Key Strategy**: All heavy models are loaded once at startup. Intermediate results like landmarks and background masks are cached/reused to minimize redundant computation.
 
@@ -139,5 +139,8 @@ C:\Users\yashm\Desktop\ftb-scorecard\
 ├── masks/                  # Debug masks (Garment, Skin, BG)
 ├── template/               # Branded background templates
 ├── weights/                # Model weights (.safetensors, .onnx, .bin)
+└── __pycache__/            # Python bytecode
+```
+tensors, .onnx, .bin)
 └── __pycache__/            # Python bytecode
 ```

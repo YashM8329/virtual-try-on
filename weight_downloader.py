@@ -10,9 +10,12 @@ import urllib.request
 POSE_LANDMARKER_MODEL = "weights/pose_landmarker_heavy.task"
 MP_MODEL_PATH = "weights/selfie_multiclass_256x256.tflite"
 GFPGAN_MODEL_PATH = "weights/GFPGANv1.4.pth"
+CODEFORMER_MODEL_PATH = "weights/codeformer.onnx"
+DETECTION_MODEL_PATH = "weights/facelib/detection_Resnet50_Final.pth"
 
 def download_weights():
     os.makedirs("weights", exist_ok=True)
+    os.makedirs("weights/facelib", exist_ok=True)
 
     # MediaPipe Pose Landmarker Heavy
     if not os.path.exists(POSE_LANDMARKER_MODEL):
@@ -40,6 +43,24 @@ def download_weights():
             GFPGAN_MODEL_PATH,
         )
         print("GFPGAN weights downloaded.")
+
+    # CodeFormer ONNX weights
+    if not os.path.exists(CODEFORMER_MODEL_PATH):
+        print("Downloading CodeFormer ONNX weights...")
+        urllib.request.urlretrieve(
+            "https://huggingface.co/facefusion/models-3.0.0/resolve/main/codeformer.onnx",
+            CODEFORMER_MODEL_PATH,
+        )
+        print("CodeFormer weights downloaded.")
+
+    # RetinaFace detection weights (for facexlib - optional fallback)
+    if not os.path.exists(DETECTION_MODEL_PATH):
+        print("Downloading RetinaFace detection weights...")
+        urllib.request.urlretrieve(
+            "https://github.com/xinntao/facexlib/releases/download/v0.1.0/detection_Resnet50_Final.pth",
+            DETECTION_MODEL_PATH,
+        )
+        print("Detection weights downloaded.")
 
 if __name__ == "__main__":
     download_weights()

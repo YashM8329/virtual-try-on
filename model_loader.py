@@ -36,6 +36,12 @@ def load_openpose_generator():
     print("✅ OpenPose generator loaded (CPU).")
     return openpose
 
+def load_face_enhancer():
+    """Load the Studio Face Enhancer (with CodeFormer AI)."""
+    from face_enhancer import FaceEnhancer
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    return FaceEnhancer(device=device)
+
 def load_diffusion_pipeline():
     """
     Load MultiControlNet (OpenPose + Canny) + SD Inpainting pipeline.

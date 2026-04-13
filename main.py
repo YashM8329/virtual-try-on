@@ -43,13 +43,14 @@ from scorecard_processor import ScorecardProcessor
 from model_loader import (
     load_unified_preprocessor,
     load_diffusion_pipeline, load_openpose_generator,
+    load_face_enhancer,
 )
 
 print("\n[Model Loading] Loading all models...")
 preprocessor   = load_unified_preprocessor()
 openpose_gen   = load_openpose_generator()
 pipe           = load_diffusion_pipeline()
-face_enhancer  = FaceEnhancer()
+face_enhancer  = load_face_enhancer()
 print("[Model Loading] All models loaded.\n")
 
 # ── Scorecard processor ────────────────────────────────────────────────────────
@@ -128,7 +129,12 @@ def main():
             result_np = np.array(result)
             
             # Landmark-based Face Enhancement (landmark reuse saves 2s)
-            enhanced_pil = face_enhancer.enhance_full(Image.fromarray(result_np), save_name=fname, user_landmarks=lm_px)
+            enhanced_pil = face_enhancer.enhance_full(
+                Image.fromarray(result_np),
+                save_name=fname,
+                user_landmarks=lm_px,
+                skin_mask=skin_mask,
+            )
             enhanced_bgr = cv2.cvtColor(np.array(enhanced_pil), cv2.COLOR_RGB2BGR)
             
             # Final composite using cached alpha

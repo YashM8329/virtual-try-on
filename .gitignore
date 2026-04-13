@@ -4,5 +4,6 @@ masks/
 output/
 scorecard/
 template/
-input/
 enhanced/
+input/
+cropped/
